@@ -39,7 +39,7 @@ services:
     image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-oap-server:10.0.1 # 原镜像`apache/skywalking-oap-server:10.0.1`
     container_name: oap
     restart: unless-stopped
-    privileged: true                    # 获取宿主机root权限
+    privileged: true
     environment:
       TZ: Asia/Shanghai
       JAVA_OPTS: "-Xmx2048M -Xms2048M"
@@ -64,7 +64,7 @@ services:
     image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-ui:10.0.1 # 原镜像`apache/skywalking-ui:10.0.1`
     container_name: oap-ui
     restart: unless-stopped
-    privileged: true                    # 获取宿主机root权限
+    privileged: true
     depends_on:
       - oap
     links:

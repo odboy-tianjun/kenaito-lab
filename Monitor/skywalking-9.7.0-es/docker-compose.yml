@@ -36,10 +36,10 @@ services:
         ipv4_address: 172.24.0.83
 
   oap:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-oap-server:9.5.0 # 原镜像`apache/skywalking-oap-server:9.5.0`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-oap-server:9.7.0 # 原镜像`apache/skywalking-oap-server:9.7.0`
     container_name: oap
     restart: unless-stopped
-    privileged: true                    # 获取宿主机root权限
+    privileged: true
     environment:
       TZ: Asia/Shanghai
       JAVA_OPTS: "-Xmx2048M -Xms2048M"
@@ -48,8 +48,6 @@ services:
       SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
       SW_ES_USER: elastic
       SW_ES_PASSWORD: elastic123456 # tips: 密码不能为纯数字，启动会出问题
-    #    volumes:
-    #      - "./skywalking/mysql-connector-java-8.0.28.jar:/skywalking/ext-libs/mysql-connector-java-8.0.28.jar"
     ports:
       - "11800:11800" # agent 上报数据的端口，这是 gRPC 端口
       - "12800:12800" # ui 读取数据的端口， 这是 http 端口
@@ -63,10 +61,10 @@ services:
 
   # 可视化界面
   oap-ui:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-ui:9.5.0 # 原镜像`apache/skywalking-ui:9.5.0`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-ui:9.7.0 # 原镜像`apache/skywalking-ui:9.7.0`
     container_name: oap-ui
     restart: unless-stopped
-    privileged: true                    # 获取宿主机root权限
+    privileged: true
     depends_on:
       - oap
     links:

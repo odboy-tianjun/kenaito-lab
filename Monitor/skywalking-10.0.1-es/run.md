@@ -5,16 +5,7 @@
 - https://github.com/apache/skywalking
 - https://skywalking.apache.org
 
-### 部署方式1
-
-```shell
-docker-compose -f docker-compose.yml -p skywalking up -d
-
-# 运行后，给当前目录下所有文件赋予权限(读、写、执行)
-# chmod -R 777 ./elasticsearch
-```
-
-### 部署方式2
+### 部署方式
 ```shell
 sh install.sh
 ```
@@ -32,11 +23,12 @@ sh install.sh
 在java项目运行启动的时候，添加如下运行参数
 
 ```shell
--javaagent:D:\skywalking-agent\skywalking-agent.jar \
+-javaagent:E:\AppGreen\env\skywalking-agent\10.0.1\skywalking-agent.jar \
 -DSW_AGENT_COLLECTOR_BACKEND_SERVICES=192.168.235.104:11800
 -DSW_AGENT_NAMESPACE=yourAppEnv \
 -DSW_AGENT_NAME=yourAppName
 ```
+![idea-jvm-options](./idea-jvm-options.png)
 
 项目跑起来之后，如果访问不了，就多重启几次oap-ui
 

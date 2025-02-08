@@ -5,14 +5,7 @@
 - https://github.com/apache/skywalking
 - https://skywalking.apache.org
 
-### 部署方式1
-
-```shell
-docker-compose -f docker-compose.yml -p skywalking up -d
-```
-
-### 部署方式2
-
+### 部署方式
 ```shell
 sh install.sh
 ```
@@ -23,18 +16,19 @@ sh install.sh
 
 下载`Java Agent` https://skywalking.apache.org/downloads/
 
-> eg: https://dlcdn.apache.org/skywalking/java-agent/9.3.0/apache-skywalking-java-agent-9.3.0.tgz
+> eg: https://dlcdn.apache.org/skywalking/java-agent/9.1.0/apache-skywalking-java-agent-9.1.0.tgz
 
 修改`skywalking-agent\config\agent.config`中配置参数 或 在jvm运行的时候指定
 
 在java项目运行启动的时候，添加如下运行参数
 
 ```shell
--javaagent:D:\skywalking-agent\skywalking-agent.jar \
+-javaagent:E:\AppGreen\env\skywalking-agent\9.1.0\skywalking-agent.jar \
 -DSW_AGENT_COLLECTOR_BACKEND_SERVICES=192.168.235.104:11800
 -DSW_AGENT_NAMESPACE=yourAppEnv \
 -DSW_AGENT_NAME=yourAppName
 ```
+![idea-jvm-options](./idea-jvm-options.png)
 
 项目跑起来之后，如果访问不了，就多重启几次oap-ui
 
