@@ -19,6 +19,7 @@
   - DubboAdmin
 - Other 未分类
   - ansible
+  - nginx-tengine-3.1.0 nginx（tengine 3.1.0 源码编译）
 
 
 # 支持的语言

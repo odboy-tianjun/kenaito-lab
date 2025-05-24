@@ -1,4 +1,4 @@
-FROM alibaba-cloud-linux-3-registry.cn-hangzhou.cr.aliyuncs.com/alinux3/alinux3:latest
+FROM alibaba-cloud-linux-3-registry.cn-hangzhou.cr.aliyuncs.com/alinux3/alinux3:220901.1
 LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 ENV DOTNET_HOME=/usr/local/dotnet
