@@ -1,2 +1,3 @@
-#./configure --enable-optimizations --with-ssl --prefix=/usr/local/python3
-docker build -t kenaito-runtime:python3 .
+IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-python3
+docker build -t "${IMAGE}" .
+docker push "${IMAGE}"

@@ -1,1 +1,3 @@
-docker build -t kenaito-middleware:nginx-tengine-3.1.0 .
+IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:proxy-tengine3
+docker build -t "${IMAGE}" .
+docker push "${IMAGE}"

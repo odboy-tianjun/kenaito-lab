@@ -4,4 +4,6 @@ rm -f openjdk-21.0.2_linux-x64_bin.tar.gz
 rm -f jdk-21.0.2/lib/src.zip
 tar -czvf jdk-21.0.2.tar.gz jdk-21.0.2
 rm -rf jdk-21.0.2
-docker build -t kenaito-runtime:jdk21 .
+IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-jdk21
+docker build -t "${IMAGE}" .
+docker push "${IMAGE}"

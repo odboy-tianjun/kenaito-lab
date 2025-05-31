@@ -4,4 +4,6 @@ rm -f openjdk-11.0.2_linux-x64_bin.tar.gz
 rm -f jdk-11.0.2/lib/src.zip
 tar -czvf jdk-11.0.2.tar.gz jdk-11.0.2
 rm -rf jdk-11.0.2
-docker build -t kenaito-runtime:jdk11 .
+IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-jdk11
+docker build -t "${IMAGE}" .
+docker push "${IMAGE}"
