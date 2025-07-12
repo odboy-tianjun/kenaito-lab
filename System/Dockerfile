@@ -10,4 +10,6 @@ WORKDIR /home/admin
 #    net-tools  \
 #    bind-utils -y;
 RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo;
+    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo; \
+    yum update -y && yum clean all; \
+    rm -rf /usr/lib/python3.6;
