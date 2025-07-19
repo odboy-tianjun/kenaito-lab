@@ -5,9 +5,7 @@ ENV JAVA_HOME=/usr/local/java
 ENV PATH="${JAVA_HOME}/bin:$PATH"
 WORKDIR /home/admin
 ADD jdk-17.0.2.tar.gz ./
-RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo; \
-    yum install \
+RUN yum install \
     tar \
     wget \
     net-tools  \

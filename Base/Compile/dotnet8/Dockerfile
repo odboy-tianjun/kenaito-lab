@@ -6,9 +6,7 @@ ENV PATH="${DOTNET_HOME}:$PATH"
 WORKDIR /home/admin
 # https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.403-linux-x64-binaries
 ADD https://download.visualstudio.microsoft.com/download/pr/ca6cd525-677e-4d3a-b66c-11348a6f920a/ec395f498f89d0ca4d67d903892af82d/dotnet-sdk-8.0.403-linux-x64.tar.gz ./
-RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo; \
-    yum install \
+RUN yum install \
     libffi-devel \
     zlib-devel \
     bzip2-devel \

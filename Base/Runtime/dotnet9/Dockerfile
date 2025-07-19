@@ -6,9 +6,7 @@ ENV PATH="${DOTNET_HOME}:$PATH"
 WORKDIR /home/admin
 # https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-9.0.0-rc.2-linux-x64-binaries
 ADD https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/9.0.0-rc.2.24474.3/aspnetcore-runtime-9.0.0-rc.2.24474.3-linux-x64.tar.gz ./
-RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo; \
-    yum install \
+RUN yum install \
     libffi-devel \
     zlib-devel \
     bzip2-devel \

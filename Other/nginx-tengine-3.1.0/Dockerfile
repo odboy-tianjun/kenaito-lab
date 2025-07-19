@@ -7,9 +7,7 @@ ENV PATH="${NGINX_HOME}/sbin:$PATH"
 WORKDIR /home/admin
 # https://tengine.taobao.org/download/tengine-3.1.0.tar.gz
 ADD https://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz ./
-RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo; \
-    yum install \
+RUN yum install \
     gcc \
     gcc-c++ \
     make \

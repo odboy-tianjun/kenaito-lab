@@ -5,9 +5,7 @@ ENV PYTHON_HOME=/usr/local/python3
 ENV PATH="${PYTHON_HOME}/bin:$PATH"
 WORKDIR /home/admin
 ADD https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz ./
-RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo; \
-    yum install \
+RUN yum install \
     libffi-devel \
     zlib-devel \
     bzip2-devel \
