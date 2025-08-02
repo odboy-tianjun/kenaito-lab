@@ -42,6 +42,7 @@ RUN yum install \
     --with-stream_realip_module \
     --with-pcre-jit; \
     make && make install; \
+    mkdir -p ${NGINX_HOME}/conf/ssl ${NGINX_HOME}/conf/conf.d; \
     nginx -V; \
     rm -rf /home/admin/tengine-${TENGINE_VERSION} /home/admin/tengine-${TENGINE_VERSION}.tar.gz
 # tengine 默认以 nobody 用户运行 worker 进程，root 启动后自动降权，可直接监听 80/443
