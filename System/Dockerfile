@@ -2,6 +2,7 @@
 FROM alibaba-cloud-linux-3-registry.cn-hangzhou.cr.aliyuncs.com/alinux3/alinux3:220901.1 AS builder
 ENV TimeZone=Asia/Shanghai
 ENV PYTHON_HOME=/usr/local/python3
+ENV PATH="${PYTHON_HOME}/bin:$PATH"
 WORKDIR /home/admin
 
 ADD https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz ./
