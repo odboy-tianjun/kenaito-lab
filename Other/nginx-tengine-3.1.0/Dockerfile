@@ -1,5 +1,5 @@
-# 编译阶段：仅用于构建 tengine，构建工具链不进入最终镜像
-FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:alinux3-update20261111 AS builder
+FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:alinux3-update20261111
+LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 ENV TENGINE_VERSION=3.1.0
 ENV NGINX_HOME=/usr/local/nginx
@@ -42,20 +42,9 @@ RUN yum install \
     --with-stream_realip_module \
     --with-pcre-jit; \
     make && make install; \
-    ${NGINX_HOME}/sbin/nginx -V
-
-# 运行阶段：仅保留 tengine 运行时（编译产物依赖已随基础镜像提供）
-FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:alinux3-update20261111
-LABEL MAINTAINER="tianjun@odboy.cn"
-ENV TimeZone=Asia/Shanghai
-ENV TENGINE_VERSION=3.1.0
-ENV NGINX_HOME=/usr/local/nginx
-ENV PATH="${NGINX_HOME}/sbin:$PATH"
-WORKDIR /home/admin
-
-COPY --from=builder /usr/local/nginx /usr/local/nginx
-RUN mkdir -p ${NGINX_HOME}/conf/ssl ${NGINX_HOME}/conf/conf.d; \
-    nginx -V
+    mkdir -p ${NGINX_HOME}/conf/ssl ${NGINX_HOME}/conf/conf.d; \
+    nginx -V; \
+    rm -rf /home/admin/tengine-${TENGINE_VERSION} /home/admin/tengine-${TENGINE_VERSION}.tar.gz
 
 # tengine 默认以 nobody 用户运行 worker 进程，root 启动后自动降权，可直接监听 80/443
 EXPOSE 80 443
