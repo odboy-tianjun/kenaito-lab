@@ -49,4 +49,4 @@ RUN yum install \
 # tengine 默认以 nobody 用户运行 worker 进程，root 启动后自动降权，可直接监听 80/443
 EXPOSE 80 443
 STOPSIGNAL SIGQUIT
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
