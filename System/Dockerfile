@@ -3,4 +3,5 @@ LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 WORKDIR /home/admin
 
-RUN yum update -y && yum clean all;
+# 升级会有很多问题，比如nginx编译失败等
+#RUN yum update -y && yum clean all;
