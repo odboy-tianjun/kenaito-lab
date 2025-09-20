@@ -5,6 +5,8 @@ ENV TENGINE_VERSION=3.1.0
 ENV NGINX_HOME=/usr/local/nginx
 ENV PATH="${NGINX_HOME}/sbin:$PATH"
 WORKDIR /home/admin
+# 使用自定义配置覆盖默认可映射的目录：conf/nginx.conf、conf/conf.d、conf/ssl
+COPY nginx.conf ${NGINX_HOME}/conf/nginx.conf
 # https://tengine.taobao.org/download/tengine-3.1.0.tar.gz
 ADD https://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz ./
 RUN yum install \
@@ -45,7 +47,7 @@ RUN yum install \
     make install; \
     mkdir -p ${NGINX_HOME}/conf/ssl ${NGINX_HOME}/conf/conf.d; \
     ls -l ${NGINX_HOME}/sbin; \
-    ${NGINX_HOME}/sbin/nginx -V; \
+    ${NGINX_HOME}/sbin/nginx -t -c ${NGINX_HOME}/conf/nginx.conf; \
     rm -rf /home/admin/tengine-${TENGINE_VERSION} /home/admin/tengine-${TENGINE_VERSION}.tar.gz
 
 # tengine 默认以 nobody 用户运行 worker 进程，root 启动后自动降权，可直接监听 80/443
