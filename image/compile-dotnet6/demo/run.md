@@ -5,7 +5,7 @@
 | 阶段 | 镜像                                                          | 说明                          |
 |----|-------------------------------------------------------------|-----------------------------|
 | 编译 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:compile-dotnet6` | 含 SDK 6.0.427（见上级 `Dockerfile`） |
-| 运行 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-dotnet6` | 仅含 ASP.NET Core 运行时 6.0.35（见 `top/image/runtime-dotnet6`） |
+| 运行 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-dotnet6` | 仅含 ASP.NET Core 运行时 6.0.35（见 `image/runtime-dotnet6`） |
 
 编译环境镜像带 SDK 和整套编译工具链（体积大），只在构建阶段使用；运行阶段只拷贝 `dotnet publish` 的产物，
 镜像里不带 SDK、源码和中间文件。
