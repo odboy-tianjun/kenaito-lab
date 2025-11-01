@@ -5,6 +5,7 @@
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown.sh + run.md(+demo.png)
+demo/   使用示例：如何用 image/ 的镜像构建、部署应用，见 demo/README.md
 ```
 
 ### 使用约定
@@ -29,7 +30,7 @@ app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown
 | `image/runtime-dotnet6`        | `kenaito:runtime-dotnet6`        | 上者 / ASP.NET Core 运行时 6.0.35 | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet8`        | `kenaito:runtime-dotnet8`        | 上者 / ASP.NET Core 运行时 8.0.x  | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet9`        | `kenaito:runtime-dotnet9`        | 上者 / ASP.NET Core 运行时 9.0.x  | 运行环境，仅运行时                                                       |
-| `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/run.md`             |
+| `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），示例见 [demo/dotnet6](demo/dotnet6/run.md) |
 | `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链）                                             |
 | `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链）                                             |
 | `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | 上者 / Tengine 3.1.0 源码编译     | 反向代理 / Web 服务器，自定义 `nginx.conf`                               |
@@ -65,6 +66,9 @@ app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown
 | [`app/tengine-3.1.0`](app/tengine-3.1.0/run.md)                               | Tengine 3.1.0（`proxy-tengine3` 镜像）   | 80、443                           | 反代示例，证书与站点配置挂载目录                       |
 
 同版本的 ES / MySQL / Agent 三种形态目录并列，按需选择其一部署；ES 形态与 MySQL 形态端口相同，不要同时启动。
+
+# 使用示例
+- [demo/dotnet6](demo/dotnet6/run.md)：`compile-dotnet6` + `runtime-dotnet6` 两阶段构建 .NET 6 Web API 并部署，更多示例见 [demo/README.md](demo/README.md)
 
 # 支持的语言
 - dotnet 适用于 dotnet 应用
