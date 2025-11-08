@@ -1,10 +1,10 @@
-# 示例：.NET 6 编译 + 运行
+# dotnet6 编译 + 运行示例
 
-演示如何组合 `image/` 下的两个自建镜像构建一个 .NET 6 Web 应用（本目录是独立示例，不参与镜像构建）：
+演示如何用本目录的两个镜像构建一个 .NET 6 Web 应用：
 
 | 阶段 | 镜像                                                          | 说明                          |
 |----|-------------------------------------------------------------|-----------------------------|
-| 编译 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:compile-dotnet6` | 含 SDK 6.0.427（见 `image/compile-dotnet6`） |
+| 编译 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:compile-dotnet6` | 含 SDK 6.0.427（见上级 `Dockerfile`） |
 | 运行 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-dotnet6` | 仅含 ASP.NET Core 运行时 6.0.35（见 `image/runtime-dotnet6`） |
 
 编译环境镜像带 SDK 和整套编译工具链（体积大），只在构建阶段使用；运行阶段只拷贝 `dotnet publish` 的产物，
@@ -13,15 +13,14 @@
 ### 示例内容
 
 ```
-demo/dotnet6/
+demo/
 ├── Demo.csproj        # net6.0 Web 项目
 ├── Program.cs         # 最小 Web API：GET / 返回运行时信息，GET /health 健康检查
 ├── Dockerfile         # 两阶段构建：compile-dotnet6 -> runtime-dotnet6
 ├── build.sh           # 构建镜像（PUSH=1 时同时推送）
 ├── docker-compose.yml # 部署编排（端口 8080，固定 IP 172.26.0.20）
 ├── install.sh         # docker-compose up -d
-├── shutdown.sh        # docker-compose down
-└── run.md             # 本文
+└── shutdown.sh        # docker-compose down
 ```
 
 ### 构建与部署
