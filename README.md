@@ -9,7 +9,7 @@ app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown
 
 ### 使用约定
 
-- 所有自建镜像都基于 `kenaito:alinux3-update20261111` 构建，先构建基础镜像，再构建上层镜像
+- 所有自建镜像都基于 `kenaito:system-alinux3` 构建，先构建基础镜像，再构建上层镜像
 - 镜像目录：`cd image/<目录> && sh build.sh`（构建并推送，镜像 tag 写在 `build.sh` 的 `IMAGE` 变量，与目录名一致）
 - 部署目录：`cd app/<目录> && sh install.sh`，`sh shutdown.sh` 停止；每个目录自洽，不依赖仓库其它层级
 - 部署目录中使用的第三方镜像（MySQL、Nacos、Zookeeper、RocketMQ、EFK、SkyWalking 等）均同步到了
@@ -21,7 +21,7 @@ app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown
 
 | 目录                           | 镜像 tag                         | 基础镜像 / 版本                   | 说明                                                                     |
 | ------------------------------ | -------------------------------- | --------------------------------- | ------------------------------------------------------------------------ |
-| `image/alinux3-update20261111` | `kenaito:alinux3-update20261111` | 阿里云 alinux3 3.13.3             | 系统基础镜像，其余镜像均基于它                                           |
+| `image/system-alinux3`         | `kenaito:system-alinux3`         | 阿里云 alinux3 3.13.3             | 系统基础镜像，其余镜像均基于它                                           |
 | `image/runtime-jdk11`          | `kenaito:runtime-jdk11`          | 上者 / JDK 11                     | 运行环境，仅 JDK                                                         |
 | `image/runtime-jdk17`          | `kenaito:runtime-jdk17`          | 上者 / JDK 17                     | 运行环境，仅 JDK                                                         |
 | `image/runtime-jdk21`          | `kenaito:runtime-jdk21`          | 上者 / JDK 21.0.2                 | 运行环境，仅 JDK                                                         |

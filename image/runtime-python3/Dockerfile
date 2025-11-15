@@ -1,4 +1,4 @@
-FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:alinux3-update20261111
+FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:system-alinux3
 LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 ENV PYTHON_HOME=/usr/local/python3
