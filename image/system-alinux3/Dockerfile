@@ -6,3 +6,5 @@ WORKDIR /home/admin
 
 # 升级会有很多问题，比如nginx编译失败等
 #RUN yum update -y && yum clean all;
+RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
+    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo;

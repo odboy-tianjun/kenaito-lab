@@ -5,25 +5,12 @@ ENV DOTNET_HOME=/usr/local/dotnet
 ENV PATH="${DOTNET_HOME}:$PATH"
 WORKDIR /home/admin
 # https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.10-linux-x64-binaries
-ADD https://download.visualstudio.microsoft.com/download/pr/6d143cf6-e215-428e-bcde-9fd50ea0e1be/99652e31b3e0161a3f1f933e0bedf223/aspnetcore-runtime-8.0.10-linux-x64.tar.gz ./
+# 由 build.sh 预先下载到本目录
+ADD aspnetcore-runtime-8.0.10-linux-x64.tar.gz /usr/local/dotnet/
+# sysstat/net-tools 用于排障
+# libicu：.NET 全球化（CultureInfo/TimeZoneInfo）必需，缺了 dotnet 命令会直接 Abort
 RUN yum install \
-    libffi-devel \
-    zlib-devel \
-    bzip2-devel \
-    openssl-devel \
-    ncurses-devel \
-    sqlite-devel \
-    readline-devel \
-    tk-devel \
-    gdbm-devel \
-    libpcap-devel \
-    xz-devel \
-    make \
-    patch \
-    gcc \
-    tar \
+    libicu \
     sysstat \
     net-tools -y; \
-    mkdir /usr/local/dotnet; \
-    tar -xzvf aspnetcore-runtime-8.0.10-linux-x64.tar.gz -C /usr/local/dotnet; \
     dotnet --info;

@@ -5,25 +5,12 @@ ENV DOTNET_HOME=/usr/local/dotnet
 ENV PATH="${DOTNET_HOME}:$PATH"
 WORKDIR /home/admin
 # https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-9.0.0-rc.2-linux-x64-binaries
-ADD https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/9.0.0-rc.2.24474.3/aspnetcore-runtime-9.0.0-rc.2.24474.3-linux-x64.tar.gz ./
+# 由 build.sh 预先下载到本目录
+ADD aspnetcore-runtime-9.0.0-rc.2.24474.3-linux-x64.tar.gz /usr/local/dotnet/
+# sysstat/net-tools 用于排障
+# libicu：.NET 全球化（CultureInfo/TimeZoneInfo）必需，缺了 dotnet 命令会直接 Abort
 RUN yum install \
-    libffi-devel \
-    zlib-devel \
-    bzip2-devel \
-    openssl-devel \
-    ncurses-devel \
-    sqlite-devel \
-    readline-devel \
-    tk-devel \
-    gdbm-devel \
-    libpcap-devel \
-    xz-devel \
-    make \
-    patch \
-    gcc \
-    tar \
+    libicu \
     sysstat \
     net-tools -y; \
-    mkdir /usr/local/dotnet; \
-    tar -xzvf aspnetcore-runtime-9.0.0-rc.2.24474.3-linux-x64.tar.gz -C /usr/local/dotnet; \
     dotnet --info;
