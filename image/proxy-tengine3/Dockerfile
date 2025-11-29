@@ -8,7 +8,9 @@ WORKDIR /home/admin
 # 使用自定义配置覆盖默认可映射的目录：conf/nginx.conf、conf/conf.d、conf/ssl
 COPY nginx.conf ${NGINX_HOME}/conf/nginx.conf
 # https://tengine.taobao.org/download/tengine-3.1.0.tar.gz
-ADD https://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz ./
+# 由 build.sh 预先下载到本目录
+ADD tengine-${TENGINE_VERSION}.tar.gz ./
+# gcc/gcc-c++/make 用于编译 tengine；sysstat/net-tools 用于排障
 RUN yum install \
     gcc \
     gcc-c++ \

@@ -4,7 +4,9 @@ ENV TimeZone=Asia/Shanghai
 ENV PYTHON_HOME=/usr/local/python3
 ENV PATH="${PYTHON_HOME}/bin:$PATH"
 WORKDIR /home/admin
-ADD https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz ./
+# https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+# 由 build.sh 预先下载到本目录
+ADD Python-3.10.0.tgz ./
 RUN yum install \
     libffi-devel \
     zlib-devel \
