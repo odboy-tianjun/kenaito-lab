@@ -11,7 +11,7 @@ COPY nginx.conf ${NGINX_HOME}/conf/nginx.conf
 # 由 build.sh 预先下载到本目录
 ADD tengine-${TENGINE_VERSION}.tar.gz ./
 # gcc/gcc-c++/make 用于编译 tengine；sysstat/net-tools 用于排障
-RUN yum install \
+RUN dnf install \
     gcc \
     gcc-c++ \
     make \
@@ -50,7 +50,7 @@ RUN yum install \
     mkdir -p ${NGINX_HOME}/conf/ssl ${NGINX_HOME}/conf/conf.d; \
     ls -l ${NGINX_HOME}/sbin; \
     ${NGINX_HOME}/sbin/nginx -t -c ${NGINX_HOME}/conf/nginx.conf; \
-    rm -rf /home/admin/tengine-${TENGINE_VERSION} /home/admin/tengine-${TENGINE_VERSION}.tar.gz
+    rm -rf /home/admin/tengine-${TENGINE_VERSION}
 
 # tengine 默认以 nobody 用户运行 worker 进程，root 启动后自动降权，可直接监听 80/443
 EXPOSE 80 443
