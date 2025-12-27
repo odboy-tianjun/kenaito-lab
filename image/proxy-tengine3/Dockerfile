@@ -11,7 +11,7 @@ COPY nginx.conf ${NGINX_HOME}/conf/nginx.conf
 # 由 build.sh 预先下载到本目录
 ADD tengine-${TENGINE_VERSION}.tar.gz ./
 # gcc/gcc-c++/make 用于编译 tengine；sysstat/net-tools 用于排障
-RUN dnf install \
+RUN yum install \
     gcc \
     gcc-c++ \
     make \
