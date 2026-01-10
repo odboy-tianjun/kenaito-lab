@@ -11,5 +11,5 @@ if [ ! -f "${TENGINE}" ]; then
 fi
 
 IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:proxy-tengine3
-docker build -t "${IMAGE}" .
+docker build --no-cache -t "${IMAGE}" .
 docker push "${IMAGE}"

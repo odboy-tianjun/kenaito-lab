@@ -7,5 +7,30 @@ WORKDIR /home/admin
 # 升级会有很多问题，比如nginx编译失败等
 #RUN yum update -y && yum clean all;
 
+# 替换公网源
 RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
     sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo;
+
+# 写入优化dnf.conf
+RUN cat > /etc/dnf/dnf.conf <<'EOF'
+[main]
+gpgcheck=1
+installonly_limit=3
+clean_requirements_on_remove=True
+max_parallel_downloads=12
+# 镜像构建阶段一次性 makecache，运行时完全不刷元数据
+metadata_expire=-1
+check_config_file_age=False
+skip_if_unavailable=True
+# 海外千万别开，测速会疯狂重试
+fastestmirror=0
+keepcache=True
+metadata_timer_sync=0
+# 置空，关闭 module 机制，大幅提速
+module_platform_id=
+timeout=30
+minrate=2048
+EOF
+
+# 预制缓存，打进镜像
+RUN dnf clean all && dnf makecache
