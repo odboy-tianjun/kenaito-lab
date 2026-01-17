@@ -7,30 +7,39 @@ WORKDIR /home/admin
 # 升级会有很多问题，比如nginx编译失败等
 #RUN yum update -y && yum clean all;
 
-# 替换公网源
-RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone; \
-    sed -i 's/mirrors.cloud.aliyuncs.com/mirrors.aliyun.com/' /etc/yum.repos.d/*.repo;
+# 全局锁 releasever=8
+RUN mkdir -p /etc/dnf/vars && echo 8 > /etc/dnf/vars/releasever
 
-# 写入优化dnf.conf
-RUN cat > /etc/dnf/dnf.conf <<'EOF'
-[main]
+# 删除原有全部repo，手写 Anolis 8 阿里云源
+RUN rm -rf /etc/yum.repos.d/* && \
+cat > /etc/yum.repos.d/anolis-base.repo <<'EOF'
+[anolis-BaseOS]
+name=Anolis 8 BaseOS
+baseurl=https://mirrors.aliyun.com/anolis/8/BaseOS/$basearch/os/
 gpgcheck=1
-installonly_limit=3
-clean_requirements_on_remove=True
-max_parallel_downloads=12
-# 镜像构建阶段一次性 makecache，运行时完全不刷元数据
-metadata_expire=-1
-check_config_file_age=False
-skip_if_unavailable=True
-# 海外千万别开，测速会疯狂重试
-fastestmirror=0
-keepcache=True
-metadata_timer_sync=0
-# 置空，关闭 module 机制，大幅提速
-module_platform_id=
-timeout=30
-minrate=2048
+gpgkey=https://mirrors.aliyun.com/anolis/RPM-GPG-KEY-Anolis-8
+enabled=1
+
+[anolis-AppStream]
+name=Anolis 8 AppStream
+baseurl=https://mirrors.aliyun.com/anolis/8/AppStream/$basearch/os/
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/anolis/RPM-GPG-KEY-Anolis-8
+enabled=1
 EOF
 
-# 预制缓存，打进镜像
+# ========== 修复后的 EPEL8（重点：加 Everything） ==========
+RUN cat > /etc/yum.repos.d/epel.repo <<'EOF'
+[epel]
+name=Extra Packages for Enterprise Linux 8
+baseurl=https://mirrors.aliyun.com/epel/8/Everything/$basearch
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-8
+enabled=1
+EOF
+
+# dnf 调优
+RUN echo -e "max_parallel_downloads=10\nmetadata_expire=3600\nmetadata_timer_sync=0\ndeltarpm=False\ntimeout=15\nminrate=200k" >> /etc/dnf/dnf.conf
+
+# 缓存
 RUN dnf clean all && dnf makecache

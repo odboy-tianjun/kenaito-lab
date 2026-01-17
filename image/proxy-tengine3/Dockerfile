@@ -1,4 +1,4 @@
-FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:system-alinux3
+FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:system-alinux4
 LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 ENV TENGINE_VERSION=3.1.0
@@ -11,7 +11,7 @@ COPY nginx.conf ${NGINX_HOME}/conf/nginx.conf
 # 由 build.sh 预先下载到本目录
 ADD tengine-${TENGINE_VERSION}.tar.gz ./
 # gcc/gcc-c++/make 用于编译 tengine；sysstat/net-tools 用于排障
-RUN yum install \
+RUN set -e && yum install \
     gcc \
     gcc-c++ \
     make \
