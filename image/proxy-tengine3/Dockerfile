@@ -22,10 +22,8 @@ RUN set -e && yum install \
     libxml2-devel \
     libxslt-devel \
     gd-devel \
-    geoip-devel \
     sysstat \
     net-tools -y; \
-    tar -xzvf tengine-${TENGINE_VERSION}.tar.gz; \
     cd tengine-${TENGINE_VERSION}; \
     ./configure \
     --prefix=${NGINX_HOME} \
@@ -38,7 +36,6 @@ RUN set -e && yum install \
     --with-http_dav_module \
     --with-http_secure_link_module \
     --with-http_slice_module \
-    --with-http_geoip_module \
     --with-http_xslt_module \
     --with-http_image_filter_module \
     --with-stream \
