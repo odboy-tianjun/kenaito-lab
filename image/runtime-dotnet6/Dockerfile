@@ -9,7 +9,7 @@ WORKDIR /home/admin
 ADD aspnetcore-runtime-6.0.35-linux-x64.tar.gz /usr/local/dotnet/
 # sysstat/net-tools 用于排障
 # libicu：.NET 全球化（CultureInfo/TimeZoneInfo）必需，缺了 dotnet 命令会直接 Abort
-RUN yum install \
+RUN set -e && yum install \
     libicu \
     sysstat \
     net-tools -y; \

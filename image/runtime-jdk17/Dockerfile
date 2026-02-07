@@ -5,7 +5,7 @@ ENV JAVA_HOME=/usr/local/java
 ENV PATH="${JAVA_HOME}/bin:$PATH"
 WORKDIR /home/admin
 ADD jdk-17.0.2.tar.gz ./
-RUN yum install \
+RUN set -e && yum install \
     tar \
     wget \
     net-tools  \

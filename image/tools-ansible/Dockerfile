@@ -7,7 +7,7 @@ WORKDIR /home/admin
 # https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
 # 由 build.sh 预先下载到本目录
 ADD Python-3.10.0.tgz ./
-RUN yum install \
+RUN set -e && yum install \
     libffi-devel \
     zlib-devel \
     bzip2-devel \
@@ -32,6 +32,6 @@ RUN yum install \
     python3 -V; \
     mkdir ~/.pip;
 COPY pip.conf ~/.pip/
-RUN yum install -y \
+RUN set -e && yum install -y \
     epel-release \
     ansible;

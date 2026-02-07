@@ -9,7 +9,7 @@ WORKDIR /home/admin
 ADD dotnet-sdk-9.0.100-rc.2.24474.11-linux-x64.tar.gz /usr/local/dotnet/
 # gcc/make 用于编译含原生代码的 NuGet 包；sysstat/net-tools 用于排障
 # libicu：.NET 全球化（CultureInfo/TimeZoneInfo）必需，缺了 dotnet 命令会直接 Abort
-RUN yum install \
+RUN set -e && yum install \
     gcc \
     make \
     libicu \
