@@ -15,20 +15,16 @@ RUN set -e && yum install \
     ncurses-devel \
     sqlite-devel \
     readline-devel \
-    tk-devel \
-    gdbm-devel \
-    libpcap-devel \
     xz-devel \
     make \
-    patch \
     gcc \
     tar \
     sysstat \
     net-tools -y; \
-    tar -xvf Python-3.10.0.tgz; \
     cd Python-3.10.0; \
     ./configure --prefix=/usr/local/python3; \
     make && make install; \
     python3 -V; \
+    cd /home/admin && rm -rf Python-3.10.0; \
     mkdir ~/.pip;
 COPY pip.conf ~/.pip/
