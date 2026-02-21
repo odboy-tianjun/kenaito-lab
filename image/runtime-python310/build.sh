@@ -10,6 +10,6 @@ if [ ! -f "${PYTHON}" ]; then
   curl -fL -o "${PYTHON}" "${URL}"
 fi
 
-IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-python3
+IMAGE=registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-python310
 docker build -t "${IMAGE}" .
 docker push "${IMAGE}"
