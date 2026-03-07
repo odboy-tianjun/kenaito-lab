@@ -8,6 +8,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# https://jdk.java.net/archive/
 VERSION=11.0.2
 PKG=jdk-${VERSION}.tar.gz
 SRC_PKG=openjdk-${VERSION}_linux-x64_bin.tar.gz
