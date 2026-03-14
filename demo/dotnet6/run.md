@@ -19,7 +19,7 @@ demo/
 ├── Dockerfile         # 两阶段构建：compile-dotnet6 -> runtime-dotnet6
 ├── build.sh           # 构建镜像（PUSH=1 时同时推送）
 ├── docker-compose.yml # 部署编排（端口 8080，固定 IP 172.26.0.20）
-├── install.sh         # docker-compose up -d
+├── startup.sh         # docker-compose up -d
 └── shutdown.sh        # docker-compose down
 ```
 
@@ -28,7 +28,7 @@ demo/
 ```shell
 sh build.sh            # docker build -t registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-dotnet6 .
 PUSH=1 sh build.sh     # 构建并推送
-sh install.sh          # docker-compose -f docker-compose.yml -p dotnet6-demo up -d
+sh startup.sh          # docker-compose -f docker-compose.yml -p dotnet6-demo up -d
 ```
 
 访问：
