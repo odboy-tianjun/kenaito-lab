@@ -34,8 +34,8 @@ sh startup.sh          # docker-compose -f docker-compose.yml -p dotnet6-demo up
 访问：
 
 ```shell
-curl http://192.168.235.104:8080/        # {"message":"dotnet6 is running","runtime":"6.0.35",...}
-curl http://192.168.235.104:8080/health  # ok
+curl http://127.0.0.1:8080/        # {"message":"dotnet6 is running","runtime":"6.0.35",...}
+curl http://127.0.0.1:8080/health  # ok
 ```
 
 ### 关键点
