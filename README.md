@@ -6,7 +6,7 @@
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown.sh + run.md(+demo.png)
         app/ansible 例外：基于 runtime-python310 构建 ansible 镜像
-demo/   构建示例：演示如何基于 image/ 下的镜像做两阶段构建
+demo/   构建示例：演示如何基于 image/ 下的镜像做两阶段构建（dotnet6 / dotnet8 / dotnet9）
 ```
 
 ### 使用约定
@@ -32,8 +32,8 @@ demo/   构建示例：演示如何基于 image/ 下的镜像做两阶段构建
 | `image/runtime-dotnet8`        | `kenaito:runtime-dotnet8`        | 上者 / ASP.NET Core 运行时 8.0.x  | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet9`        | `kenaito:runtime-dotnet9`        | 上者 / ASP.NET Core 运行时 9.0.x  | 运行环境，仅运行时                                                       |
 | `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet6` |
-| `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链）                                             |
-| `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链）                                             |
+| `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet8` |
+| `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet9` |
 | `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | 上者 / Tengine 3.1.0 源码编译     | 反向代理 / Web 服务器，自定义 `nginx.conf`                               |
 | `app/ansible`                  | `kenaito:ansible`                | 上者 / Ansible（基于 runtime-python310） | 运维工具镜像                                                     |
 

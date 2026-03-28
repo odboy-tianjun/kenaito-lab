@@ -1,0 +1,28 @@
+version: '3.8'
+
+networks:
+  dotnet8-demo:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.28.0.0/24"
+
+services:
+  demo:
+    image: registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-dotnet8   # 镜像由 build.sh 构建
+    container_name: dotnet8-demo
+    restart: unless-stopped
+    ports: # 映射端口
+      - "8081:8081"
+    environment: # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+      ASPNETCORE_URLS: http://0.0.0.0:8081
+    healthcheck:
+      test: ["CMD-SHELL", "netstat -tln | grep -q ':8081 '"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      dotnet8-demo:
+        ipv4_address: 172.28.0.20
