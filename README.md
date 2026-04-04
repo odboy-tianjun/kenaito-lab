@@ -4,16 +4,16 @@
 
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
-app/    部署编排：每个目录 = docker-compose.yml + install.sh / shutdown.sh + run.md(+demo.png)
+app/    部署编排：每个目录 = docker-compose.yml + startup.sh / shutdown.sh + run.md(+demo.png)
         app/ansible 例外：基于 runtime-python310 构建 ansible 镜像
-demo/   构建示例：演示如何基于 image/ 下的镜像做两阶段构建（dotnet6 / dotnet8 / dotnet9）
+demo/   构建示例：基于 image/ 下的镜像做两阶段构建（dotnet6 / dotnet8 / dotnet9），以及 tengine 反向代理示例
 ```
 
 ### 使用约定
 
 - 所有自建镜像都基于 `kenaito:system-alinux3` 构建，先构建基础镜像，再构建上层镜像
 - 镜像目录：`cd image/<目录> && sh build.sh`（构建并推送，镜像 tag 写在 `build.sh` 的 `IMAGE` 变量，与目录名一致）
-- 部署目录：`cd app/<目录> && sh install.sh`，`sh shutdown.sh` 停止；每个目录自洽，不依赖仓库其它层级
+- 部署目录：`cd app/<目录> && sh startup.sh`，`sh shutdown.sh` 停止；每个目录自洽，不依赖仓库其它层级
 - 部署目录中使用的第三方镜像（MySQL、Nacos、Zookeeper、RocketMQ、EFK、SkyWalking 等）均同步到了
   `registry.cn-shanghai.aliyuncs.com/odboy/<原名>:<版本>`，注释里保留原镜像名
 
@@ -64,9 +64,18 @@ demo/   构建示例：演示如何基于 image/ 下的镜像做两阶段构建�
 | [`app/skywalking-10.0.1-es`](app/skywalking-10.0.1-es/run.md)                 | SkyWalking OAP / UI 10.0.1 + ES 7.14.1   | 11800、12800、18080、9200、9300   | 链路追踪，ES 存储                                      |
 | [`app/skywalking-10.0.1-mysql`](app/skywalking-10.0.1-mysql/run.md)           | SkyWalking OAP / UI 10.0.1 + MySQL 8.0   | 11800、12800、18080、3308         | 链路追踪，MySQL 存储                                   |
 | [`app/skywalking-10.0.1-agent`](app/skywalking-10.0.1-agent/README.md)        | SkyWalking Java Agent 9.3.0              | -                                 | 应用接入 agent 包（仅 `*.tgz`，无编排）                |
-| [`app/tengine-3.1.0`](app/tengine-3.1.0/run.md)                               | Tengine 3.1.0（`proxy-tengine3` 镜像）   | 80、443                           | 反代示例，证书与站点配置挂载目录                       |
 
 同版本的 ES / MySQL / Agent 三种形态目录并列，按需选择其一部署；ES 形态与 MySQL 形态端口相同，不要同时启动。
+
+### 构建示例
+
+| 目录                                        | 基础镜像                           | 端口          | 说明                                                       |
+| ------------------------------------------- | ---------------------------------- | ------------- | ---------------------------------------------------------- |
+| [`demo/dotnet6`](demo/dotnet6/README.md)    | `compile-dotnet6` / `runtime-dotnet6` | 8080       | .NET 6 两阶段构建示例                                      |
+| [`demo/dotnet8`](demo/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
+| [`demo/dotnet9`](demo/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
+| [`demo/tengine3`](demo/tengine3/run.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
+
 
 # 支持的语言
 - dotnet 适用于 dotnet 应用

@@ -23,10 +23,10 @@
 
 ```shell
 docker build -t registry.cn-shanghai.aliyuncs.com/odboy/kenaito:proxy-tengine3 .
-sh install.sh
+sh startup.sh
 ```
 
-等同：`docker-compose -f docker-compose.yml -p tengine up -d`
+等同：`docker-compose -f docker-compose.yml -p tengine3 up -d`
 
 访问 http://192.168.235.104 （http 80）、https://192.168.235.104 （https 443），
 如 `demo.odboy.cn` 已解析到该机器，可用 `-H "Host: demo.odboy.cn"` 或直接访问域名
