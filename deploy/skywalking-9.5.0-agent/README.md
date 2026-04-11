@@ -11,4 +11,4 @@ java -javaagent:/path/to/skywalking-agent/skywalking-agent.jar \
 ```
 
 - Agent 包版本与 OAP 版本是两套编号，Agent 8.x 对应 OAP 9.5.0
-- OAP 部署见 `app/skywalking-9.5.0-es` 或 `app/skywalking-9.5.0-mysql`
+- OAP 部署见 `deploy/skywalking-9.5.0-es` 或 `deploy/skywalking-9.5.0-mysql`
