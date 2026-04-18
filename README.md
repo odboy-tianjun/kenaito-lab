@@ -5,7 +5,7 @@
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 deploy/ 部署编排：三方镜像 + 自研的 docker-compose / 配置，每个目录 = docker-compose.yml + startup.sh / shutdown.sh + run.md(+demo.png)
-demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、tengine3），以及 ansible 镜像构建
+demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、tengine3）
 ```
 
 ### 使用约定
@@ -34,7 +34,7 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet8` |
 | `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet9` |
 | `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | 上者 / Tengine 3.1.0 源码编译     | 反向代理 / Web 服务器，自定义 `nginx.conf`                               |
-| `image/ansible`（构建见 `demo/ansible`） | `kenaito:ansible`         | 上者 / Ansible（基于 runtime-python310） | 运维工具镜像                                                    |
+| `image/tools-ansible`          | `kenaito:ansible`                | 上者 / Ansible（基于 runtime-python315） | 运维工具镜像，锁定 ansible-core 2.16.3                     |
 
 ### 部署编排
 
@@ -74,7 +74,6 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | [`demo/dotnet8`](demo/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
 | [`demo/dotnet9`](demo/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
 | [`demo/tengine3`](demo/tengine3/run.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
-| [`demo/ansible`](demo/ansible/build.sh)     | `runtime-python310`                | -             | Ansible 运维工具镜像构建（产出 `kenaito:ansible`）         |
 
 
 # 支持的语言
