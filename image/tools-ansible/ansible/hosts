@@ -1,53 +1,54 @@
-# This is the default ansible 'hosts' file.
+# Ansible 主机清单：使用用户名 + 密码连接 Linux / Windows / macOS
 #
-# It should live in /etc/ansible/hosts
+# 本文件默认安装在 /etc/ansible/hosts，也可用 `ansible -i hosts ...` 指定
+# 示例中的 IP、用户名、密码均为占位值，请替换为实际值
 #
-#   - Comments begin with the '#' character
-#   - Blank lines are ignored
-#   - Groups of hosts are delimited by [header] elements
-#   - You can enter hostnames or ip addresses
-#   - A hostname/ip can be a member of multiple groups
+# 每台主机的账号密码都不同，因此变量全部写在主机行内（ini 清单的 key=value 形式），
+# 不使用 [组名:vars]，避免同组主机被迫共用一套凭据；
+# 需要按组统一处理的非凭据变量（如 ansible_connection）也逐台写在行内，见下方各组注释
 
-# Ex 1: Ungrouped hosts, specify before any group headers:
+# ---------------------------------------------------------------------------
+# Linux：SSH 用户名 + 密码
+#   - 用密码登录 SSH 需要控制端装 sshpass（原生 ssh 连接插件不支持交互式输入密码）
+#     alinux3 / RHEL 系：yum install -y sshpass
+#     Debian / Ubuntu：apt-get install -y sshpass
+#     macOS（Homebrew）：brew install hudochenkov/sshpass/sshpass
+#   - StrictHostKeyChecking=no 用于跳过首次连接的主机指纹确认
+#   - 普通用户需要提权时再加 ansible_become=true ansible_become_password=...
+# ---------------------------------------------------------------------------
+[linux]
+linux-01 ansible_host=192.0.2.11 ansible_connection=ssh ansible_user=root ansible_password=YourLinuxPassword1 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+linux-02 ansible_host=192.0.2.12 ansible_connection=ssh ansible_user=admin ansible_password=YourLinuxPassword2 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
-## green.example.com
-## blue.example.com
-## 192.168.100.1
-## 192.168.100.10
+# ---------------------------------------------------------------------------
+# Windows：WinRM 用户名 + 密码
+#   1. 目标机已执行 ConfigureRemotingForAnsible.ps1，或手动开启 WinRM 并放行 5985/5986
+#   2. 本地账号 / 域账号都可用 NTLM；域账号写 DOMAIN\用户名 或 用户名@domain.com
+#      （反斜杠在 ini 清单里不是转义字符，可直接写）
+#   3. 改用 Basic 认证（仅限可信内网）时：ansible_winrm_transport=basic
+#      ansible_port=5985 ansible_winrm_scheme=http
+#   4. 控制端需要 pywinrm：pip install pywinrm requests-ntlm
+#      （本镜像未预装，非 Windows 需求可以不装；镜像内走的是 runtime-python315 的 pip 国内源）
+# ---------------------------------------------------------------------------
+[windows]
+win-01 ansible_host=192.0.2.21 ansible_connection=winrm ansible_user=Administrator ansible_password=YourWindowsPassword1 ansible_winrm_transport=ntlm ansible_port=5986 ansible_winrm_scheme=https ansible_winrm_server_cert_validation=ignore
+win-02 ansible_host=192.0.2.22 ansible_connection=winrm ansible_user=CORP\deploy ansible_password=YourWindowsPassword2 ansible_winrm_transport=ntlm ansible_port=5986 ansible_winrm_scheme=https ansible_winrm_server_cert_validation=ignore
 
-# Ex 2: A collection of hosts belonging to the 'webservers' group:
+# ---------------------------------------------------------------------------
+# macOS：SSH 用户名 + 密码
+#   1. 目标 Mac 打开「系统设置 → 通用 → 共享 → 远程登录」，或 sudo systemsetup -setremotelogin on
+#   2. macOS 默认只有 python3（没有 /usr/bin/python），必须显式指定解释器，
+#      否则 Ansible 自动发现会报 "No python interpreters found"
+#   3. 密码登录需要 sshd 允许（默认允许）；控制端同样需要 sshpass
+# ---------------------------------------------------------------------------
+[macos]
+mac-01 ansible_host=192.0.2.31 ansible_connection=ssh ansible_user=admin ansible_password=YourMacPassword1 ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+mac-02 ansible_host=192.0.2.32 ansible_connection=ssh ansible_user=deploy ansible_password=YourMacPassword2 ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
-## [webservers]
-## alpha.example.org
-## beta.example.org
-## 192.168.1.100
-## 192.168.1.110
-
-# If you have multiple hosts following a pattern, you can specify
-# them like this:
-
-## www[001:006].example.com
-
-# You can also use ranges for multiple hosts:
-
-## db-[99:101]-node.example.com
-
-# Ex 3: A collection of database servers in the 'dbservers' group:
-
-## [dbservers]
-##
-## db01.intranet.mydomain.net
-## db02.intranet.mydomain.net
-## 10.25.1.56
-## 10.25.1.57
-
-
-# Ex4: Multiple hosts arranged into groups such as 'Debian' and 'openSUSE':
-
-## [Debian]
-## alpha.example.org
-## beta.example.org
-
-## [openSUSE]
-## green.example.com
-## blue.example.com
+# ---------------------------------------------------------------------------
+# 关于凭据安全
+#   - 密码明文写在清单里有泄露风险，production 建议用 ansible-vault 加密宿主变量文件后
+#     用 vars_files 引入，或统一改用密钥登录（ansible_ssh_private_key_file）
+#   - 也可以不写 ansible_password，运行时用 --ask-pass 交互输入（一次输入作用于该次运行的所有主机，
+#     因此只适合本次运行内密码一致的情况）
+# ---------------------------------------------------------------------------
