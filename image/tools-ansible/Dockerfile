@@ -8,3 +8,6 @@ RUN set -e && yum install -y \
     epel-release \
     ansible-core-2.16.3; \
     ansible --version
+
+COPY ./ansible/ansible.cfg /etc/ansible/ansible.cfg
+COPY ./ansible/hosts /etc/ansible/hosts
