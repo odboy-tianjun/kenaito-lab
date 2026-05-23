@@ -11,6 +11,8 @@
 .mtj.tmp/
 
 # Package Files #
+# SkyWalking Java Agent 包改为 OSS 下载，不入库
+.apache-skywalking-java-agent-*.tgz
 *.war
 *.nar
 *.ear

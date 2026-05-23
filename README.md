@@ -56,7 +56,7 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | [`deploy/efk`](deploy/efk/run.md)                                                   | Elasticsearch / Kibana / Filebeat 7.14.1 | 9200、9300、5601                  | 日志采集 + 搜索 + 展示，含 ik 分词                     |
 | [`deploy/skywalking-9.5.0-es`](deploy/skywalking-9.5.0-es/run.md)                   | SkyWalking OAP / UI 9.5.0 + ES 7.14.1    | 11800、12800、18080、9200、9300   | 链路追踪，ES 存储                                      |
 | [`deploy/skywalking-9.5.0-mysql`](deploy/skywalking-9.5.0-mysql/run.md)             | SkyWalking OAP / UI 9.5.0 + MySQL 8.0    | 11800、12800、18080、3308         | 链路追踪，MySQL 存储                                   |
-| [`deploy/skywalking-9.5.0-agent`](deploy/skywalking-9.5.0-agent/README.md)          | SkyWalking Java Agent 8.15.0             | -                                 | 应用接入 agent 包（仅 `*.tgz`，无编排）                |
+| [`deploy/skywalking-9.5.0-agent`](deploy/skywalking-9.5.0-agent/README.md)          | SkyWalking Java Agent 8.15.0             | -                                 | 应用接入 agent 包（OSS 下载，无编排）                  |
 | [`deploy/skywalking-9.7.0-es`](deploy/skywalking-9.7.0-es/run.md)                   | SkyWalking OAP / UI 9.7.0 + ES 7.14.1    | 11800、12800、18080、9200、9300   | 链路追踪，ES 存储                                      |
 | [`deploy/skywalking-9.7.0-mysql`](deploy/skywalking-9.7.0-mysql/run.md)             | SkyWalking OAP / UI 9.7.0 + MySQL 8.0    | 11800、12800、18080、3308         | 链路追踪，MySQL 存储                                   |
 | [`deploy/skywalking-9.7.0-agent`](deploy/skywalking-9.7.0-agent/README.md)          | SkyWalking Java Agent 9.1.0              | -                                 | 应用接入 agent 包（仅 `*.tgz`，无编排）                |
@@ -73,6 +73,7 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | [`demo/dotnet6`](demo/dotnet6/README.md)    | `compile-dotnet6` / `runtime-dotnet6` | 8080       | .NET 6 两阶段构建示例                                      |
 | [`demo/dotnet8`](demo/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
 | [`demo/dotnet9`](demo/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
+| [`demo/python310-flask`](demo/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
 | [`demo/tengine3`](demo/tengine3/run.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
 
 
