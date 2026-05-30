@@ -1,8 +1,11 @@
 # SkyWalking Java Agent 9.1.0
 
-SkyWalking 9.7.0 对应的 Java Agent 接入包，无 Docker 编排，直接取本目录的 `apache-skywalking-java-agent-9.1.0.tgz` 注入应用：
+SkyWalking 9.7.0 对应的 Java Agent 接入包，本目录不放二进制（`*.tgz` 已改为 OSS 下载，不再入 Git）：
 
 ```shell
+# 下载 Agent 包
+curl -fLO https://oss.odboy.cn/kenaito-lab/skywalking/apache-skywalking-java-agent-9.1.0.tgz
+
 tar -xzf apache-skywalking-java-agent-9.1.0.tgz
 java -javaagent:/path/to/skywalking-agent/skywalking-agent.jar \
      -Dskywalking.agent.service_name=<应用名> \

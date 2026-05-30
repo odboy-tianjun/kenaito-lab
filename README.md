@@ -59,10 +59,10 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | [`deploy/skywalking-9.5.0-agent`](deploy/skywalking-9.5.0-agent/README.md)          | SkyWalking Java Agent 8.15.0             | -                                 | 应用接入 agent 包（OSS 下载，无编排）                  |
 | [`deploy/skywalking-9.7.0-es`](deploy/skywalking-9.7.0-es/run.md)                   | SkyWalking OAP / UI 9.7.0 + ES 7.14.1    | 11800、12800、18080、9200、9300   | 链路追踪，ES 存储                                      |
 | [`deploy/skywalking-9.7.0-mysql`](deploy/skywalking-9.7.0-mysql/run.md)             | SkyWalking OAP / UI 9.7.0 + MySQL 8.0    | 11800、12800、18080、3308         | 链路追踪，MySQL 存储                                   |
-| [`deploy/skywalking-9.7.0-agent`](deploy/skywalking-9.7.0-agent/README.md)          | SkyWalking Java Agent 9.1.0              | -                                 | 应用接入 agent 包（仅 `*.tgz`，无编排）                |
+| [`deploy/skywalking-9.7.0-agent`](deploy/skywalking-9.7.0-agent/README.md)          | SkyWalking Java Agent 9.1.0              | -                                 | 应用接入 agent 包（OSS 下载，无编排）                |
 | [`deploy/skywalking-10.0.1-es`](deploy/skywalking-10.0.1-es/run.md)                 | SkyWalking OAP / UI 10.0.1 + ES 7.14.1   | 11800、12800、18080、9200、9300   | 链路追踪，ES 存储                                      |
 | [`deploy/skywalking-10.0.1-mysql`](deploy/skywalking-10.0.1-mysql/run.md)           | SkyWalking OAP / UI 10.0.1 + MySQL 8.0   | 11800、12800、18080、3308         | 链路追踪，MySQL 存储                                   |
-| [`deploy/skywalking-10.0.1-agent`](deploy/skywalking-10.0.1-agent/README.md)        | SkyWalking Java Agent 9.3.0              | -                                 | 应用接入 agent 包（仅 `*.tgz`，无编排）                |
+| [`deploy/skywalking-10.0.1-agent`](deploy/skywalking-10.0.1-agent/README.md)        | SkyWalking Java Agent 9.3.0              | -                                 | 应用接入 agent 包（OSS 下载，无编排）                |
 
 同版本的 ES / MySQL / Agent 三种形态目录并列，按需选择其一部署；ES 形态与 MySQL 形态端口相同，不要同时启动。
 
