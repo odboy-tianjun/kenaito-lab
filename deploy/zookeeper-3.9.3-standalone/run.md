@@ -6,7 +6,7 @@
 
 ### 部署方式
 ```shell
-sh install.sh
+sh startup.sh
 ```
 
 ### 客户端

@@ -9,7 +9,7 @@
 ### 安装部署
 ```shell
 # 运行
-sh install.sh
+sh startup.sh
 ```
 
 1. ES访问地址：[`ip地址:9200`](http://192.168.235.104:9200)

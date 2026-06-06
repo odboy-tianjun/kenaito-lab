@@ -4,7 +4,7 @@ https://github.com/apache/dubbo-admin
 
 ### 部署方式
 ```shell
-sh install.sh
+sh startup.sh
 ```
 
 ### 访问地址

@@ -5,7 +5,7 @@ https://rocketmq.apache.org/zh/docs/4.x/quickstart/01quickstart
 ### 部署方式
 
 ```shell
-sh install.sh
+sh startup.sh
 ```
 
 ### Maven依赖

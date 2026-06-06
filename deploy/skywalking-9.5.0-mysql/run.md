@@ -7,7 +7,7 @@
 
 ### 部署方式
 ```shell
-sh install.sh
+sh startup.sh
 ```
 
 访问 http://192.168.235.104:18080
