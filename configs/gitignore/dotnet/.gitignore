@@ -1,0 +1,42 @@
+# ---- 编译输出 ----
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+*.dll
+*.exe
+*.pdb
+*.cache
+
+# ---- 构建工具 ----
+artifacts/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# ---- 调试 / 测试 ----
+*.[Cc]ache
+TestResults/
+*.trx
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+# ---- 发布 / NuGet ----
+publish/
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+
+# ---- ReSharper / Rider ----
+_ReSharper*/
+*.DotSettings.user
+.idea/

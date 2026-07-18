@@ -1,0 +1,26 @@
+# ---- 编译产物 ----
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+bin/
+dist/
+
+# ---- 测试与覆盖率 ----
+coverage.out
+coverage.html
+*.coverprofile
+profile.cov
+
+# ---- Go 工作区 / 模块缓存 ----
+go.work
+go.work.sum
+vendor/
+
+# ---- 工具 ----
+.golangci.yml
+.tool-versions
+# go.sum 与 go.mod 应当提交，不要忽略
