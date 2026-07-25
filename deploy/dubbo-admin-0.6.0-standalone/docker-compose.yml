@@ -9,7 +9,7 @@ networks:
 
 services:
   zookeeper:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/zookeeper:3.9.3    # 原镜像`zookeeper:3.9.3`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:zookeeper-3.9.3    # 原镜像`zookeeper:3.9.3`
     container_name: zookeeper
     restart: unless-stopped
     volumes:
@@ -22,7 +22,7 @@ services:
       dubbo-network:
         ipv4_address: 172.23.0.81
   dubbo-admin:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/dubbo-admin:0.6.0     # 原镜像`apache/dubbo-admin:0.6.0`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apacha-dubbo-admin-0.6.0     # 原镜像`apache/dubbo-admin:0.6.0`
     container_name: dubbo-admin
     restart: unless-stopped
     volumes:
