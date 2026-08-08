@@ -10,7 +10,7 @@ networks:
 
 services:
   mysql:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/mysql:8.0  # 原镜像`mysql:8.0`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:mysql-8.0  # 原镜像`mysql:8.0`
     container_name: mysql8                                    # 容器名为'mysql8'
     restart: unless-stopped
     volumes: # 数据卷挂载路径设置,将本机目录映射到容器目录
@@ -32,7 +32,7 @@ services:
       nacos:
         ipv4_address: 172.24.0.80
   nacos:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/nacos-server:2.5.0
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:nacos-server-2.5.5
     container_name: nacos
     restart: always
     ports:
