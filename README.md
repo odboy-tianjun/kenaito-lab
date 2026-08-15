@@ -5,7 +5,7 @@
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 deploy/ 部署编排：三方镜像 + 自研的 docker-compose / 配置，每个目录 = docker-compose.yml + startup.sh / shutdown.sh + run.md(+demo.png)
-demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、tengine3）
+demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、tengine3）
 ```
 
 ### 使用约定
@@ -14,7 +14,9 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 - 镜像目录：`cd image/<目录> && sh build.sh`（构建并推送，镜像 tag 写在 `build.sh` 的 `IMAGE` 变量，与目录名一致）
 - 部署目录：`cd deploy/<目录> && sh startup.sh`，`sh shutdown.sh` 停止；每个目录自洽，不依赖仓库其它层级
 - 部署目录中使用的第三方镜像（MySQL、Nacos、Zookeeper、RocketMQ、EFK、SkyWalking 等）均同步到了
-  `registry.cn-shanghai.aliyuncs.com/odboy/<原名>:<版本>`，注释里保留原镜像名
+  `registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:<原名>-<版本>`，注释里保留原镜像名（如
+  `thirdrepo:nacos-server-2.5.5`、`thirdrepo:zookeeper-3.9.3`）；RocketMQ 与 SkyWalking 仍沿用
+  `odboy/apache-rocketmq:<版本>`、`odboy/skywalking-oap-server:<版本>` 等旧命名
 
 ### 自建镜像
 
@@ -42,8 +44,8 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 
 | 目录（链接指向 `run.md` 或目录说明）                                          | 组件与版本                               | 端口                              | 说明 / 依赖                                            |
 | ----------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------- | ------------------------------------------------------ |
-| [`deploy/nacos-2.5.0-standalone`](deploy/nacos-2.5.0-standalone/run.md)             | Nacos 2.5.0 + MySQL 8.0                  | 8848、9848、3308                  | 单机 Nacos，MySQL 存储，含建库脚本                     |
-| [`deploy/nacos-2.5.0-cluster`](deploy/nacos-2.5.0-cluster/run.md)                   | Nacos 2.5.0 ×3 + MySQL 8.0               | 8848-8850、9848-9849、7850、3308  | 三节点集群，MySQL 存储                                 |
+| [`deploy/nacos-2.5.0-standalone`](deploy/nacos-2.5.0-standalone/run.md)             | Nacos 2.5.5 + MySQL 8.0                  | 8848、9848、3308                  | 单机 Nacos，MySQL 存储，含建库脚本                     |
+| [`deploy/nacos-2.5.0-cluster`](deploy/nacos-2.5.0-cluster/run.md)                   | Nacos 2.5.5 ×3 + MySQL 8.0               | 8848-8850、9848-9849、7850、3308  | 三节点集群，MySQL 存储                                 |
 | [`deploy/dubbo-admin-0.6.0-standalone`](deploy/dubbo-admin-0.6.0-standalone/run.md) | Dubbo Admin 0.6.0 + Zookeeper 3.9.3      | 38080、2181                       | 单机 Dubbo 管控台                                      |
 | [`deploy/dubbo-admin-0.6.0-cluster`](deploy/dubbo-admin-0.6.0-cluster/run.md)       | Dubbo Admin 0.6.0 + Zookeeper 3.9.3 ×3   | 38080、2181-2183                  | Zookeeper 三节点集群                                   |
 | [`deploy/zookeeper-3.8.4-standalone`](deploy/zookeeper-3.8.4-standalone/run.md)     | Zookeeper 3.8.4                          | 2181                              | 单机                                                   |
