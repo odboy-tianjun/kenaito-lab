@@ -44,8 +44,8 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 
 | 目录（链接指向 `run.md` 或目录说明）                                          | 组件与版本                               | 端口                              | 说明 / 依赖                                            |
 | ----------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------- | ------------------------------------------------------ |
-| [`deploy/nacos-2.5.0-standalone`](deploy/nacos-2.5.0-standalone/run.md)             | Nacos 2.5.5 + MySQL 8.0                  | 8848、9848、3308                  | 单机 Nacos，MySQL 存储，含建库脚本                     |
-| [`deploy/nacos-2.5.0-cluster`](deploy/nacos-2.5.0-cluster/run.md)                   | Nacos 2.5.5 ×3 + MySQL 8.0               | 8848-8850、9848-9849、7850、3308  | 三节点集群，MySQL 存储                                 |
+| [`deploy/nacos-2.5.5-standalone`](deploy/nacos-2.5.5-standalone/run.md)             | Nacos 2.5.5 + MySQL 8.0                  | 8848、9848、3308                  | 单机 Nacos，MySQL 存储，含建库脚本                     |
+| [`deploy/nacos-2.5.5-cluster`](deploy/nacos-2.5.5-cluster/run.md)                   | Nacos 2.5.5 ×3 + MySQL 8.0               | 8848-8850、9848-9849、7850、3308  | 三节点集群，MySQL 存储                                 |
 | [`deploy/dubbo-admin-0.6.0-standalone`](deploy/dubbo-admin-0.6.0-standalone/run.md) | Dubbo Admin 0.6.0 + Zookeeper 3.9.3      | 38080、2181                       | 单机 Dubbo 管控台                                      |
 | [`deploy/dubbo-admin-0.6.0-cluster`](deploy/dubbo-admin-0.6.0-cluster/run.md)       | Dubbo Admin 0.6.0 + Zookeeper 3.9.3 ×3   | 38080、2181-2183                  | Zookeeper 三节点集群                                   |
 | [`deploy/zookeeper-3.8.4-standalone`](deploy/zookeeper-3.8.4-standalone/run.md)     | Zookeeper 3.8.4                          | 2181                              | 单机                                                   |
