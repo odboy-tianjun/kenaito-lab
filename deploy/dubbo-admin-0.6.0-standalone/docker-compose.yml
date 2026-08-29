@@ -27,14 +27,14 @@ services:
     restart: unless-stopped
     volumes:
       # application.properties配置文件可参考：https://github.com/apache/dubbo-admin/blob/develop/docker/latest/application.properties
-      - "./dubbo-admin/conf:/conf"
+      - "./dubbo-admin/config:/config"
     environment:
-      "admin.registry.address": zookeeper://172.23.0.81:2181
-      "admin.config-center": zookeeper://172.23.0.81:2181
-      "admin.metadata-report.address": zookeeper://172.23.0.81:2181
-      "admin.root.user.name": root
-      "admin.root.user.password": root
-      "JAVA_OPTS": "-Xmx100M -Xms100M -XX:+UseG1GC"
+#      "admin.registry.address": zookeeper://172.23.0.81:2181
+#      "admin.config-center": zookeeper://172.23.0.81:2181
+#      "admin.metadata-report.address": zookeeper://172.23.0.81:2181
+#      "admin.root.user.name": root
+#      "admin.root.user.password": root
+      "JAVA_OPTS": "-Xmx256M -Xms256M -XX:+UseG1GC"
     depends_on:
       - zookeeper
     links:
