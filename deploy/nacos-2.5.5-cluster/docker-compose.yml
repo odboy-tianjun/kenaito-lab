@@ -11,7 +11,7 @@ networks:
 services:
   mysql:
     image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:mysql-8.0  # 原镜像`mysql:8.0`
-    container_name: mysql8                                    # 容器名为'mysql8'
+    container_name: nacos-mysql8                                    # 容器名为'nacos-mysql8'
     restart: unless-stopped
     volumes: # 数据卷挂载路径设置,将本机目录映射到容器目录
       - "./mysql/my.cnf:/etc/mysql/my.cnf"
