@@ -10,7 +10,7 @@
 sh startup.sh
 ```
 
-访问 http://192.168.235.104:18080
+访问 http://127.0.0.1:18080
 
 ### Java项目配置
 
@@ -24,7 +24,7 @@ sh startup.sh
 
 ```shell
 -javaagent:E:\AppGreen\env\skywalking-agent\9.1.0\skywalking-agent.jar \
--DSW_AGENT_COLLECTOR_BACKEND_SERVICES=192.168.235.104:11800
+-DSW_AGENT_COLLECTOR_BACKEND_SERVICES=127.0.0.1:11800
 -DSW_AGENT_NAMESPACE=yourAppEnv \
 -DSW_AGENT_NAME=yourAppName
 ```

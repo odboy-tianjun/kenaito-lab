@@ -15,7 +15,7 @@ sh startup.sh
 https://github.com/vran-dev/PrettyZoo
 
 # 访问地址
-192.168.235.104:2181
+127.0.0.1:2181
 ```
 
 ### 效果图
