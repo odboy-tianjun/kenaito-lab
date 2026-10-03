@@ -10,7 +10,7 @@ networks:
 
 services:
   namesrv:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/apache-rocketmq:4.9.6
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-4.9.7
     container_name: rmqnamesrv
     ports:
       - "9876:9876"
@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.20.0.80
     command: sh mqnamesrv
   broker1:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/apache-rocketmq:4.9.6
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-4.9.7
     container_name: rmqbroker1
     ports:
       - "10909:10909"
@@ -28,7 +28,7 @@ services:
     environment:
       - NAMESRV_ADDR=rmqnamesrv:9876
     volumes:
-      - ./broker-master/broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
+      - ./broker-master1/broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
     depends_on:
       - namesrv
     networks:
@@ -36,7 +36,7 @@ services:
         ipv4_address: 172.20.0.81
     command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.6/conf/broker.conf
   broker2:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/apache-rocketmq:4.9.6
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-4.9.7
     container_name: rmqbroker2
     ports:
       - "10809:10909"
@@ -45,29 +45,12 @@ services:
     environment:
       - NAMESRV_ADDR=rmqnamesrv:9876
     volumes:
-      - ./broker-slave1/broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
+      - ./broker-master2/broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
     depends_on:
       - namesrv
     networks:
       rocketmq:
         ipv4_address: 172.20.0.82
-    command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.6/conf/broker.conf
-  broker3:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/apache-rocketmq:4.9.6
-    container_name: rmqbroker3
-    ports:
-      - "10709:10909"
-      - "10711:10911"
-      - "10712:10912"
-    environment:
-      - NAMESRV_ADDR=rmqnamesrv:9876
-    volumes:
-      - ./broker-slave2/broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
-    depends_on:
-      - namesrv
-    networks:
-      rocketmq:
-        ipv4_address: 172.20.0.83
     command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.6/conf/broker.conf
   rmqdashboard:
     image: registry.cn-shanghai.aliyuncs.com/odboy/rocketmq-dashboard:latest
@@ -79,7 +62,7 @@ services:
       - namesrv
     networks:
       rocketmq:
-        ipv4_address: 172.20.0.84
+        ipv4_address: 172.20.0.83
     environment:
       - JAVA_OPTS= -Xms256M -Xms512M -Xmn128M -Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
 

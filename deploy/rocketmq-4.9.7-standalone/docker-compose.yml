@@ -10,7 +10,7 @@ networks:
 
 services:
   namesrv:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/apache-rocketmq:4.9.6
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-4.9.7
     container_name: rmqnamesrv
     ports:
       - "9876:9876"
@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.20.0.80
     command: sh mqnamesrv
   broker:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/apache-rocketmq:4.9.6
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-4.9.7
     container_name: rmqbroker
     ports:
       - "10909:10909"
