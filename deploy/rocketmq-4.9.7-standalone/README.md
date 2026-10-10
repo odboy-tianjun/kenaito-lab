@@ -15,7 +15,7 @@ sh startup.sh
 <dependency>
     <groupId>org.apache.rocketmq</groupId>
     <artifactId>rocketmq-client</artifactId>
-    <version>4.9.6</version>
+    <version>4.9.7</version>
 </dependency>
 ```
 
