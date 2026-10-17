@@ -28,18 +28,18 @@ services:
     environment:
       - NAMESRV_ADDR=rmqnamesrv:9876
     volumes:
-      - ./master/broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
+      - ./master/broker.conf:/home/rocketmq/rocketmq-4.9.7/conf/broker.conf
     depends_on:
       - namesrv
     networks:
       rocketmq:
         ipv4_address: 172.20.0.81
-    command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.6/conf/broker.conf
+    command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.7/conf/broker.conf
   rmqdashboard:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/rocketmq-dashboard:latest
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apacherocketmq-rocketmq-dashboard-2.1.0
     container_name: rocketmq-dashboard
     ports:
-      - "8080:8080"
+      - "8080:8082"
     restart: always
     depends_on:
       - namesrv

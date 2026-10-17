@@ -92,7 +92,7 @@ public class ConsumerExample {
 
 ### 访问地址
 
-访问地址：http://127.0.0.1:8080
+访问地址：http://127.0.0.1:8082（Dashboard 2.1.0）
 
 ### 示例
 
