@@ -1,70 +1,63 @@
 version: '3.8'
 
-# 网桥 -> 方便相互通讯（172.21 段，避免与 rocketmq-4.9.7 的 172.20 冲突）
+# 网桥 -> 方便相互通讯
 networks:
   rocketmq:
     ipam:
       driver: default
       config:
-        - subnet: "172.21.0.0/24"
+        - subnet: "172.20.0.0/24"
 
 services:
   namesrv:
     image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-5.5.0
-    container_name: rmq5namesrv
-    restart: unless-stopped
+    container_name: rmqnamesrv
     ports:
       - "9876:9876"
-    environment:
-      - JAVA_OPTIONS=-Xms512M -Xmx512M -Xmn256M
+    volumes:
+      # 5.x 新增的 NameServer 配置（4.9.7 直接用默认配置，没有该文件）
+      - ./namesrv/conf/namesrv.conf:/home/rocketmq/rocketmq-5.5.0/conf/namesrv.conf
     networks:
       rocketmq:
-        ipv4_address: 172.21.0.80
-    command: sh mqnamesrv
+        ipv4_address: 172.20.0.80
+    command: sh mqnamesrv -c /home/rocketmq/rocketmq-5.5.0/conf/namesrv.conf
   broker1:
     image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-5.5.0
-    container_name: rmq5broker1
-    restart: unless-stopped
+    container_name: rmqbroker1
     ports:
       - "10909:10909"
       - "10911:10911"
       - "10912:10912"
     environment:
       - NAMESRV_ADDR=rmqnamesrv:9876
-      - ROCKETMQ_HOME=/home/rocketmq/rocketmq-5.5.0
-      - JAVA_OPTIONS=-Xms512M -Xmx512M -Xmn256M
     volumes:
       - ./broker-master1/broker.conf:/home/rocketmq/rocketmq-5.5.0/conf/broker.conf
-      - ./broker-master1/store:/home/rocketmq/rocketmq-5.5.0/store
     depends_on:
       - namesrv
     networks:
       rocketmq:
-        ipv4_address: 172.21.0.81
+        ipv4_address: 172.20.0.81
     command: sh mqbroker -c /home/rocketmq/rocketmq-5.5.0/conf/broker.conf
   broker2:
     image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-rocketmq-5.5.0
-    container_name: rmq5broker2
-    restart: unless-stopped
+    container_name: rmqbroker2
     ports:
       - "10809:10909"
       - "10811:10911"
       - "10812:10912"
     environment:
       - NAMESRV_ADDR=rmqnamesrv:9876
-      - JAVA_OPTIONS=-Xms512M -Xmx512M -Xmn256M
     volumes:
       - ./broker-master2/broker.conf:/home/rocketmq/rocketmq-5.5.0/conf/broker.conf
-      - ./broker-master2/store:/home/rocketmq/rocketmq-5.5.0/store
     depends_on:
       - namesrv
     networks:
       rocketmq:
-        ipv4_address: 172.21.0.82
+        ipv4_address: 172.20.0.82
     command: sh mqbroker -c /home/rocketmq/rocketmq-5.5.0/conf/broker.conf
   rmqdashboard:
     image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apacherocketmq-rocketmq-dashboard-2.1.0
-    container_name: rmq5dashboard
+    container_name: rocketmq-dashboard
     ports:
       - "8080:8082"
     restart: always
@@ -72,6 +65,6 @@ services:
       - namesrv
     networks:
       rocketmq:
-        ipv4_address: 172.21.0.83
+        ipv4_address: 172.20.0.83
     environment:
-      - JAVA_OPTS= -Xms256M -Xmx512M -Xmn128M -Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
+      - JAVA_OPTS= -Xms256M -Xms512M -Xmn128M -Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
