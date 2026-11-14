@@ -36,7 +36,7 @@ services:
         ipv4_address: 172.24.0.83
 
   oap:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-oap-server:9.7.0 # 原镜像`apache/skywalking-oap-server:9.7.0`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-skywalking-oap-server-9.7.0 # 原镜像`apache/skywalking-oap-server:9.7.0`
     container_name: oap
     restart: unless-stopped
     privileged: true
@@ -51,8 +51,15 @@ services:
     ports:
       - "11800:11800" # agent 上报数据的端口，这是 gRPC 端口
       - "12800:12800" # ui 读取数据的端口， 这是 http 端口
+    healthcheck: # 容器内没有 curl，用 bash 的 /dev/tcp 探测 HTTP 端口是否可连
+      test: ["CMD-SHELL", "timeout 2 bash -c 'echo > /dev/tcp/127.0.0.1/12800' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s # OAP 首次建索引/模板较慢，留足冷启动时间
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_started
     links:
       - elasticsearch
     networks:
@@ -61,18 +68,19 @@ services:
 
   # 可视化界面
   oap-ui:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/skywalking-ui:9.7.0 # 原镜像`apache/skywalking-ui:9.7.0`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:apache-skywalking-ui-9.7.0 # 原镜像`apache/skywalking-ui:9.7.0`
     container_name: oap-ui
     restart: unless-stopped
     privileged: true
     depends_on:
-      - oap
+      oap:
+        condition: service_healthy # 等 OAP 的 12800 端口就绪再启动，避免启动期 Connection refused
     links:
       - oap
     ports:
       - "18080:8080"
     environment:
-      SW_OAP_ADDRESS: http://172.24.0.81:12800
+      SW_OAP_ADDRESS: http://oap:12800 # 用服务名，避免依赖固定 IP
       TZ: Asia/Shanghai
     networks:
       skywalking:

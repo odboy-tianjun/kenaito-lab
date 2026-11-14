@@ -27,3 +27,12 @@ replay_pid*
 
 # macOS
 .DS_Store
+
+# 部署目录的运行产物（ES/MySQL/Nacos/RocketMQ 等数据目录与日志）
+deploy/*/elasticsearch/data/
+deploy/*/elasticsearch/logs/
+deploy/*/mysql/data/
+deploy/*/nacos*/logs/
+deploy/*/broker*/store/
+deploy/*/master/store/
+deploy/*/filebeat/logs/
