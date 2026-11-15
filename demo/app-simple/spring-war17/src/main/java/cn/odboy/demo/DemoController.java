@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 运行时信息接口。与 demo/springboot-jar17 里的同名类保持一致的输出结构，方便对比 jar 与 war 两种打包方式。
+ * 运行时信息接口。与 demo/app-simple/springboot-jar17 里的同名类保持一致的输出结构，方便对比 jar 与 war 两种打包方式。
  */
 @RestController
 public class DemoController {

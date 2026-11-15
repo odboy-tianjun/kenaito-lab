@@ -5,7 +5,8 @@
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 deploy/ 部署编排：三方镜像 + 自研的 docker-compose / 配置，每个目录 = docker-compose.yml + startup.sh / shutdown.sh + README.md(+demo.png)
-demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、springboot-jar17、spring-war17、tengine3）
+demo/app-simple/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、springboot-jar17、spring-war17）
+demo/plateform/    平台类示例（tengine3 反向代理）
 ```
 
 ### 使用约定
@@ -33,9 +34,9 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | `image/runtime-dotnet6`        | `kenaito:runtime-dotnet6`        | 上者 / ASP.NET Core 运行时 6.0.35 | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet8`        | `kenaito:runtime-dotnet8`        | 上者 / ASP.NET Core 运行时 8.0.x  | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet9`        | `kenaito:runtime-dotnet9`        | 上者 / ASP.NET Core 运行时 9.0.x  | 运行环境，仅运行时                                                       |
-| `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet6` |
-| `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet8` |
-| `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet9` |
+| `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app-simple/dotnet6` |
+| `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app-simple/dotnet8` |
+| `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app-simple/dotnet9` |
 | `image/compile-maven3-jdk17`   | `kenaito:compile-maven3-jdk17`   | `runtime-jdk17` / Maven 3.9.9     | 编译环境（JDK 17 + Maven + git/gcc/make），`settings.xml` 走阿里云源 |
 | `image/compile-maven3-jdk21`   | `kenaito:compile-maven3-jdk21`   | `runtime-jdk21` / Maven 3.9.9     | 同上，JDK 换 21；编 Java 21 目标时用 |
 | `image/compile-maven3-jdk25`   | `kenaito:compile-maven3-jdk25`   | `runtime-jdk25` / Maven 3.9.9     | 同上，JDK 换 25；编 Java 25 目标时用 |
@@ -79,13 +80,13 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 
 | 目录                                        | 基础镜像                           | 端口          | 说明                                                       |
 | ------------------------------------------- | ---------------------------------- | ------------- | ---------------------------------------------------------- |
-| [`demo/dotnet6`](demo/dotnet6/README.md)    | `compile-dotnet6` / `runtime-dotnet6` | 8080       | .NET 6 两阶段构建示例                                      |
-| [`demo/dotnet8`](demo/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
-| [`demo/dotnet9`](demo/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
-| [`demo/python310-flask`](demo/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
-| [`demo/springboot-jar17`](demo/springboot-jar17/README.md) | `compile-maven3-jdk17` / `runtime-jdk17` | 8084 | Spring Boot 3.4 可执行 jar 两阶段构建示例 |
-| [`demo/spring-war17`](demo/spring-war17/README.md)       | `compile-maven3-jdk17` / `runtime-tomcat10` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
-| [`demo/tengine3`](demo/tengine3/README.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
+| [`demo/app-simple/dotnet6`](demo/app-simple/dotnet6/README.md)    | `compile-dotnet6` / `runtime-dotnet6` | 8080       | .NET 6 两阶段构建示例                                      |
+| [`demo/app-simple/dotnet8`](demo/app-simple/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
+| [`demo/app-simple/dotnet9`](demo/app-simple/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
+| [`demo/app-simple/python310-flask`](demo/app-simple/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
+| [`demo/app-simple/springboot-jar17`](demo/app-simple/springboot-jar17/README.md) | `compile-maven3-jdk17` / `runtime-jdk17` | 8084 | Spring Boot 3.4 可执行 jar 两阶段构建示例 |
+| [`demo/app-simple/spring-war17`](demo/app-simple/spring-war17/README.md)       | `compile-maven3-jdk17` / `runtime-tomcat10` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
+| [`demo/plateform/tengine3`](demo/plateform/tengine3/README.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
 
 
 # 支持的语言
