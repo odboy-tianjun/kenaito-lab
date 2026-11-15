@@ -19,7 +19,7 @@ services:
       JAVA_OPTS: "-Xms128m -Xmx256m -Duser.timezone=Asia/Shanghai"
       CATALINA_OPTS: "-Djava.security.egd=file:/dev/./urandom"
     healthcheck:
-      # temurin 镜像自带 curl，直接探测健康页面；start_period 覆盖 war 解压与 Spring 初始化
+      # runtime-tomcat10 已装 curl，直接探测健康页面；start_period 覆盖 war 解压与 Spring 初始化
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/spring-war17/api/info > /dev/null"]
       interval: 30s
       timeout: 5s

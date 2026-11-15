@@ -17,8 +17,8 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>6.2.1</spring.version>
-        <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
         <thymeleaf-spring6.version>3.1.2.RELEASE</thymeleaf-spring6.version>
+        <jackson.version>2.18.2</jackson.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
     </properties>
 
@@ -33,6 +33,12 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring6</artifactId>
             <version>${thymeleaf-spring6.version}</version>
+        </dependency>
+        <!-- JSON 序列化：非 Boot 项目不会自动带入 Jackson，@RestController 返回 Map 必须显式声明 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <!-- JSP/Servlet API 由 Tomcat 提供，编译期需要，不打进 war -->
         <dependency>

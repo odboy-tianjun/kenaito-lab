@@ -17,8 +17,7 @@ springboot-jar17/
 ├── src/main/java/cn/odboy/demo/
 │   ├── DemoApplication.java        # @SpringBootApplication 入口
 │   ├── DemoController.java         # @RestController：/ 、/api/info、/api/hello/{name}
-│   ├── PageController.java         # @Controller：/page 渲染 Thymeleaf 模板
-│   └── BootRuntimeInfo.java        # 输出 Spring Boot 版本号与主机名
+│   └── PageController.java         # @Controller：/page 渲染 Thymeleaf 模板
 ├── src/main/resources/
 │   ├── application.yml             # 端口 8084、优雅停机、actuator 只开 health
 │   └── templates/index.html        # /page 页面

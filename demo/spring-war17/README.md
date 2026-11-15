@@ -6,7 +6,7 @@
 | 阶段 | 镜像 | 说明 |
 | --- | --- | --- |
 | 编译 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:compile-maven3-jdk17` | JDK 17 + Maven 3.9.9 + 阿里云 Maven 源（见 `image/compile-maven3-jdk17`） |
-| 运行 | `tomcat:10.1-jdk17-temurin`（Docker Hub 官方镜像） | Servlet 6.0 / Jakarta EE 10，自带 JDK 17 运行时；仓库内暂无自建 Tomcat 镜像 |
+| 运行 | `registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-tomcat10` | 自建镜像：JDK 17 + Tomcat 10.1.34（Servlet 6.0 / Jakarta EE 10，对应 Spring 6），见 `image/runtime-tomcat10` |
 
 > Spring 6 要求 Jakarta EE 9+，即 **Tomcat 10.1 及以上**；Tomcat 9（`javax.servlet`）跑不了本示例。
 
@@ -14,7 +14,7 @@
 
 ```
 spring-war17/
-├── pom.xml                         # packaging=war，Spring 6.2.1 + Thymeleaf 3.1，不依赖 Boot
+├── pom.xml                         # packaging=war，Spring 6.2.1 + Thymeleaf 3.1 + Jackson 2.18，不依赖 Boot
 ├── src/main/java/cn/odboy/demo/
 │   ├── WebAppInitializer.java      # 替代 web.xml，注册 DispatcherServlet（映射 /api/*）
 │   ├── WebConfig.java              # @EnableWebMvc + Thymeleaf 视图解析 + Jackson
@@ -22,7 +22,7 @@ spring-war17/
 │   └── PageController.java         # @Controller：/api/page 渲染模板
 ├── src/main/resources/templates/index.html
 ├── src/main/webapp/WEB-INF/web.xml       # 仅声明 metadata-complete=false 与会话超时，无 servlet 映射
-├── Dockerfile                      # 两阶段：compile-maven3-jdk17 -> tomcat:10.1-jdk17-temurin
+├── Dockerfile                      # 两阶段：compile-maven3-jdk17 -> runtime-tomcat10
 ├── build.sh                        # 构建镜像（PUSH=1 时同时推送）
 ├── docker-compose.yml              # 部署编排（8085 -> 容器 8080，固定 IP 172.30.2.20）
 ├── startup.sh                      # docker-compose up -d
@@ -68,8 +68,13 @@ Tomcat 通过 Servlet 3+ 的 `ServletContainerInitializer` 机制自动发现它
 
 **端口**：容器内 Tomcat 仍是 8080（官方镜像默认），宿主机映射到 8085。
 
+**JSON 输出**：`@EnableWebMvc` 只会注册 Spring 自带的转换器（ByteArray/String/Resource 及 JAXB 等），
+非 Boot 项目里 **Jackson 不会自动带入**。所以 `pom.xml` 显式声明了 `jackson-databind`，
+Spring 检测到它会自动注册 `MappingJackson2HttpMessageConverter`，`/api/*` 返回 `Map` 即得 JSON；
+缺了它就会像最常见的排查题那样返回 `HTTP 406 Not Acceptable`（Tomcat 自己的错误页，`Acceptable representations: []`）。
+
 **健康检查**：compose 用 `curl` 探测 `/spring-war17/api/info`，`start_period: 30s` 覆盖 war 解压与 Spring 初始化；
-temurin 镜像自带 curl，无需额外安装。
+`runtime-tomcat10` 已装 `curl`，无需额外安装。
 
 ### 运维命令
 

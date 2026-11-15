@@ -84,7 +84,7 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | [`demo/dotnet9`](demo/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
 | [`demo/python310-flask`](demo/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
 | [`demo/springboot-jar17`](demo/springboot-jar17/README.md) | `compile-maven3-jdk17` / `runtime-jdk17` | 8084 | Spring Boot 3.4 可执行 jar 两阶段构建示例 |
-| [`demo/spring-war17`](demo/spring-war17/README.md)       | `compile-maven3-jdk17` / `tomcat:10.1-jdk17` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
+| [`demo/spring-war17`](demo/spring-war17/README.md)       | `compile-maven3-jdk17` / `runtime-tomcat10` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
 | [`demo/tengine3`](demo/tengine3/README.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
 
 

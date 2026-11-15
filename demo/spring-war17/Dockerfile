@@ -9,17 +9,10 @@ RUN mvn -B -q dependency:go-offline
 COPY src ./src
 RUN mvn -B -q clean package -DskipTests
 
-# 运行阶段：外置 Tomcat 10.1（Servlet 6.0 / Jakarta EE 10，对应 Spring 6），仅含 JDK 17 运行时
-FROM tomcat:10.1-jdk17-temurin AS runtime
+# 运行阶段：自建 runtime-tomcat10（runtime-jdk17 + Tomcat 10.1.34，Servlet 6.0 / Jakarta EE 10，对应 Spring 6）
+FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-tomcat10 AS runtime
 LABEL MAINTAINER="tianjun@odboy.cn"
-ENV TimeZone=Asia/Shanghai
-# 清掉官方镜像自带的 welcome 应用，只部署本示例
-RUN rm -rf /usr/local/tomcat/webapps/* \
-    && ln -snf /usr/share/zoneinfo/${TimeZone} /etc/localtime
-
+WORKDIR /home/admin
 # 带版本号的 war 改名后部署，上下文路径 = /spring-war17
-COPY --from=build /src/target/spring-war17.war /usr/local/tomcat/webapps/spring-war17.war
-
-EXPOSE 8080
-# exec 形式：catalina.sh run 在前台运行，SIGTERM 可正常触发 Tomcat 优雅停机
-ENTRYPOINT ["catalina.sh", "run"]
+# 基础镜像已清空 webapps/*，时区、curl、EXPOSE 8080、ENTRYPOINT catalina.sh run 均由基础镜像提供
+COPY --from=build /src/target/spring-war17.war ${CATALINA_HOME}/webapps/spring-war17.war
