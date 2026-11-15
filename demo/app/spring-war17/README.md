@@ -1,7 +1,7 @@
 # spring-war17 示例
 
 演示如何用 `compile-maven3-jdk17` 打出 **war 包**，再部署到外置 Tomcat 10.1 运行。与
-[`demo/app-simple/springboot-jar17`](../springboot-jar17/README.md) 对照：应用代码几乎一样，区别只在打包方式与运行容器。
+[`demo/app/springboot-jar17`](../springboot-jar17/README.md) 对照：应用代码几乎一样，区别只在打包方式与运行容器。
 
 | 阶段 | 镜像 | 说明 |
 | --- | --- | --- |

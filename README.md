@@ -5,13 +5,16 @@
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 deploy/ 部署编排：三方镜像 + 自研的 docker-compose / 配置，每个目录 = docker-compose.yml + startup.sh / shutdown.sh + README.md(+demo.png)
-demo/app-simple/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、springboot-jar17、spring-war17）
+demo/app/          构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、springboot-jar17、spring-war17、
+                   go、rust、node-backend，以及 node-frontend-vue2/vue3/vite5 与 react-function/react-class 前端，均为两阶段构建）
 demo/plateform/    平台类示例（tengine3 反向代理）
 ```
 
 ### 使用约定
 
 - 所有自建镜像都基于 `kenaito:system-alinux3` 构建，先构建基础镜像，再构建上层镜像
+  - 例外：`proxy-tengine3` 的 `FROM` 写的是 `kenaito:system-alinux4`（2026-01-17 调整后未同步回 alinux3），
+    仓库内没有 `image/system-alinux4` 目录，重新构建前需先确认该基础镜像是否已推送
 - 镜像目录：`cd image/<目录> && sh build.sh`（构建并推送，镜像 tag 写在 `build.sh` 的 `IMAGE` 变量，与目录名一致）
 - 部署目录：`cd deploy/<目录> && sh startup.sh`，`sh shutdown.sh` 停止；每个目录自洽，不依赖仓库其它层级
 - 部署目录中使用的第三方镜像（MySQL、Nacos、Zookeeper、RocketMQ、EFK、SkyWalking 等）均同步到了
@@ -29,19 +32,37 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 | `image/runtime-jdk11`          | `kenaito:runtime-jdk11`          | 上者 / JDK 11                     | 运行环境，仅 JDK                                                         |
 | `image/runtime-jdk17`          | `kenaito:runtime-jdk17`          | 上者 / JDK 17                     | 运行环境，仅 JDK                                                         |
 | `image/runtime-jdk21`          | `kenaito:runtime-jdk21`          | 上者 / JDK 21.0.2                 | 运行环境，仅 JDK                                                         |
+| `image/runtime-jdk25`          | `kenaito:runtime-jdk25`          | 上者 / JDK 25.0.2                 | 运行环境，仅 JDK；编 Java 25 目标时作为 `compile-maven3-jdk25` 的基础镜像 |
 | `image/runtime-python310`      | `kenaito:runtime-python310`      | 上者 / Python 3.10.0              | 运行环境，Python + pip 源（`pip.conf`）                                  |
+| `image/runtime-python315`      | `kenaito:runtime-python315`      | 上者 / Python 3.15.2              | 运行环境，Python + pip 源（`pip.conf`）；node / ansible 镜像均基于它     |
 | `image/runtime-tomcat10`       | `kenaito:runtime-tomcat10`       | `runtime-jdk17` / Tomcat 10.1.34  | 运行环境，JDK 17 + Tomcat（war 包部署用），兼容 Spring 6 |
 | `image/runtime-dotnet6`        | `kenaito:runtime-dotnet6`        | 上者 / ASP.NET Core 运行时 6.0.35 | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet8`        | `kenaito:runtime-dotnet8`        | 上者 / ASP.NET Core 运行时 8.0.x  | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet9`        | `kenaito:runtime-dotnet9`        | 上者 / ASP.NET Core 运行时 9.0.x  | 运行环境，仅运行时                                                       |
-| `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app-simple/dotnet6` |
-| `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app-simple/dotnet8` |
-| `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app-simple/dotnet9` |
+| `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app/dotnet6` |
+| `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app/dotnet8` |
+| `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/app/dotnet9` |
 | `image/compile-maven3-jdk17`   | `kenaito:compile-maven3-jdk17`   | `runtime-jdk17` / Maven 3.9.9     | 编译环境（JDK 17 + Maven + git/gcc/make），`settings.xml` 走阿里云源 |
 | `image/compile-maven3-jdk21`   | `kenaito:compile-maven3-jdk21`   | `runtime-jdk21` / Maven 3.9.9     | 同上，JDK 换 21；编 Java 21 目标时用 |
 | `image/compile-maven3-jdk25`   | `kenaito:compile-maven3-jdk25`   | `runtime-jdk25` / Maven 3.9.9     | 同上，JDK 换 25；编 Java 25 目标时用 |
-| `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | 上者 / Tengine 3.1.0 源码编译     | 反向代理 / Web 服务器，自定义 `nginx.conf`                               |
-| `image/tools-ansible`          | `kenaito:ansible`                | 上者 / Ansible（基于 runtime-python315） | 运维工具镜像，锁定 ansible-core 2.16.3                     |
+| `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | `system-alinux4` / Tengine 3.1.0 源码编译 | 反向代理 / Web 服务器，自定义 `nginx.conf`；基础镜像写的是 `system-alinux4`（仓库内未收录该目录） |
+| `image/tools-ansible`          | `kenaito:ansible`                | `runtime-python315` / Ansible     | 运维工具镜像，锁定 ansible-core 2.16.3                     |
+| `image/runtime-go123`          | `kenaito:runtime-go123`          | 上者 / Go 1.23.12                 | 运行环境，Go + git/gcc（cgo）                                            |
+| `image/runtime-go122`          | `kenaito:runtime-go122`          | 上者 / Go 1.22.12                 | 同上，Go 1.22 版本线                                                     |
+| `image/compile-go123`          | `kenaito:compile-go123`          | `runtime-go123` / 编译工具链      | 编译环境，追加 make/gcc-c++/pkg-config，`GOPROXY=goproxy.cn`             |
+| `image/compile-go122`          | `kenaito:compile-go122`          | `runtime-go122` / 编译工具链      | 同上，Go 1.22 版本线                                                     |
+| `image/runtime-node22`         | `kenaito:runtime-node22`         | `runtime-python315` / Node 22.23.5 | 运行环境，Node + npm（python3 供原生模块使用）                         |
+| `image/runtime-node26`         | `kenaito:runtime-node26`         | `runtime-python315` / Node 26.13.1 | 运行环境，Node 当前最新版本线                                           |
+| `image/runtime-node20`         | `kenaito:runtime-node20`         | `runtime-python315` / Node 20.20.2 | 运行环境，Node 20 版本线                                               |
+| `image/runtime-node18`         | `kenaito:runtime-node18`         | `runtime-python315` / Node 18.20.8 | 运行环境，Node 18 版本线                                               |
+| `image/runtime-node16`         | `kenaito:runtime-node16`         | `runtime-python315` / Node 16.20.2 | 运行环境，Node 16 版本线                                               |
+| `image/compile-node22`         | `kenaito:compile-node22`         | `runtime-node22` / 编译工具链     | 编译环境，python3/make/gcc/gcc-c++（node-gyp），npm 源走 npmmirror       |
+| `image/compile-node26`         | `kenaito:compile-node26`         | `runtime-node26` / 编译工具链     | 同上，Node 最新版本线                                                    |
+| `image/compile-node20`         | `kenaito:compile-node20`         | `runtime-node20` / 编译工具链     | 同上，Node 20 版本线                                                     |
+| `image/compile-node18`         | `kenaito:compile-node18`         | `runtime-node18` / 编译工具链     | 同上，Node 18 版本线                                                     |
+| `image/compile-node16`         | `kenaito:compile-node16`         | `runtime-node16` / 编译工具链     | 同上，Node 16 版本线                                                     |
+| `image/runtime-rust`           | `kenaito:runtime-rust`           | 上者 / Rust 1.100.0               | 运行环境，rustc/cargo（无文档、无 rust-src）                             |
+| `image/compile-rust`           | `kenaito:compile-rust`           | `runtime-rust` / 编译工具链       | 编译环境，追加 gcc/make/pkg-config/openssl-devel，crates 源走阿里云       |
 
 ### 部署编排
 
@@ -80,12 +101,20 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 
 | 目录                                        | 基础镜像                           | 端口          | 说明                                                       |
 | ------------------------------------------- | ---------------------------------- | ------------- | ---------------------------------------------------------- |
-| [`demo/app-simple/dotnet6`](demo/app-simple/dotnet6/README.md)    | `compile-dotnet6` / `runtime-dotnet6` | 8080       | .NET 6 两阶段构建示例                                      |
-| [`demo/app-simple/dotnet8`](demo/app-simple/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
-| [`demo/app-simple/dotnet9`](demo/app-simple/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
-| [`demo/app-simple/python310-flask`](demo/app-simple/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
-| [`demo/app-simple/springboot-jar17`](demo/app-simple/springboot-jar17/README.md) | `compile-maven3-jdk17` / `runtime-jdk17` | 8084 | Spring Boot 3.4 可执行 jar 两阶段构建示例 |
-| [`demo/app-simple/spring-war17`](demo/app-simple/spring-war17/README.md)       | `compile-maven3-jdk17` / `runtime-tomcat10` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
+| [`demo/app/dotnet6`](demo/app/dotnet6/README.md)    | `compile-dotnet6` / `runtime-dotnet6` | 8080       | .NET 6 两阶段构建示例                                      |
+| [`demo/app/dotnet8`](demo/app/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
+| [`demo/app/dotnet9`](demo/app/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
+| [`demo/app/python310-flask`](demo/app/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
+| [`demo/app/springboot-jar17`](demo/app/springboot-jar17/README.md) | `compile-maven3-jdk17` / `runtime-jdk17` | 8084 | Spring Boot 3.4 可执行 jar 两阶段构建示例 |
+| [`demo/app/spring-war17`](demo/app/spring-war17/README.md)       | `compile-maven3-jdk17` / `runtime-tomcat10` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
+| [`demo/app/go`](demo/app/go/README.md)             | `compile-go123` / `runtime-go123`  | 8086       | Go 1.23 标准库 Web 两阶段构建示例                           |
+| [`demo/app/node-backend`](demo/app/node-backend/README.md) | `compile-node22` / `runtime-node22` | 8087 | Node 22 内置 http 模块后端服务两阶段构建示例          |
+| [`demo/app/node-frontend-vue2`](demo/app/node-frontend-vue2/README.md) | `compile-node22` / `proxy-tengine3` | 8089 | Vue 2 + Element UI 2 前端，Tengine 托管静态文件 |
+| [`demo/app/node-frontend-vue3`](demo/app/node-frontend-vue3/README.md) | `compile-node22` / `proxy-tengine3` | 8090 | Vue 3 + Element Plus 前端 |
+| [`demo/app/node-frontend-react-function`](demo/app/node-frontend-react-function/README.md) | `compile-node22` / `proxy-tengine3` | 8091 | React 19 函数组件 + Hooks 写法 |
+| [`demo/app/node-frontend-react-class`](demo/app/node-frontend-react-class/README.md) | `compile-node22` / `proxy-tengine3` | 8093 | React 19 类组件写法 |
+| [`demo/app/node-frontend-vite5`](demo/app/node-frontend-vite5/README.md) | `compile-node22` / `proxy-tengine3` | 8092 | Vite 5 + Vue 3 前端，用于和 Vite 7 对照 |
+| [`demo/app/rust`](demo/app/rust/README.md)         | `compile-rust` / `runtime-rust`    | 8088       | Rust 标准库 TcpListener Web 两阶段构建示例                  |
 | [`demo/plateform/tengine3`](demo/plateform/tengine3/README.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
 
 
@@ -98,4 +127,13 @@ demo/plateform/    平台类示例（tengine3 反向代理）
   - 运行：`runtime-jdk*`（仅 JDK，直接 `java -jar` 或作为外置 Tomcat 的基础镜像）
   - war 包运行：`runtime-tomcat10`（JDK 17 + Tomcat 10.1，兼容 Spring 6 / Servlet 6）
 - python 适用于 python 应用
-  - 编译与运行：`runtime-python310`（已配置 pip 镜像源）
+  - 编译与运行：`runtime-python310`（已配置 pip 镜像源）；另有 `runtime-python315` 作为 node / ansible 镜像的基础，不单独用于示例
+- go 适用于 go 应用
+  - 编译：`compile-go123` / `compile-go122`（Go 工具链 + gcc，`GOPROXY=goproxy.cn`）
+  - 运行：`runtime-go123` / `runtime-go122`（仅 Go，直接运行静态编译的二进制即可）
+- node 适用于 node 应用
+  - 编译：`compile-node26` / `compile-node22` / `compile-node20` / `compile-node18` / `compile-node16`（npm 源 npmmirror，python3 继承自 runtime-python315，另装 gcc）
+  - 运行：`runtime-node26` / `runtime-node22` / `runtime-node20` / `runtime-node18` / `runtime-node16`（仅 Node，`node server.js`）
+- rust 适用于 rust 应用
+  - 编译：`compile-rust`（rustc/cargo + gcc/make，crates 源走阿里云）
+  - 运行：`runtime-rust`（rustc/cargo，直接运行编译出的二进制）
