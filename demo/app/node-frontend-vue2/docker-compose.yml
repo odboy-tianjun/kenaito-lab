@@ -1,0 +1,32 @@
+version: '3.8'
+
+# 网段避开其它示例（172.31.0/24 ~ 172.31.2/24 已被 go / rust 占用）
+networks:
+  node-frontend-vue2-demo:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.31.3.0/24"
+
+services:
+  frontend:
+    image: registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-node-frontend-vue2   # 镜像由 build.sh 构建
+    container_name: node-frontend-vue2-demo
+    restart: unless-stopped
+    ports: # 映射端口：前端页面
+      - "8089:80"
+    volumes: # 只挂载站点配置目录，改完 reload 即可，不必重建镜像
+      # 挂目录而不是单文件：单文件挂载在宿主机上编辑会换 inode，容器内看不到改动
+      - "./nginx:/usr/local/nginx/conf/conf.d"
+    environment: # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+    healthcheck:
+      # 运行镜像自带 net-tools，直接用端口探测
+      test: ["CMD-SHELL", "netstat -tln | grep -q ':80 '"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      node-frontend-vue2-demo:
+        ipv4_address: 172.31.3.20
