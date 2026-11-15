@@ -35,6 +35,9 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | `image/compile-dotnet6`        | `kenaito:compile-dotnet6`        | 上者 / .NET SDK 6.0.427           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet6` |
 | `image/compile-dotnet8`        | `kenaito:compile-dotnet8`        | 上者 / .NET SDK 8.0.403           | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet8` |
 | `image/compile-dotnet9`        | `kenaito:compile-dotnet9`        | 上者 / .NET SDK 9.0.100-rc.2      | 编译环境（SDK + 编译工具链），两阶段构建示例见 `demo/dotnet9` |
+| `image/compile-maven3-jdk17`   | `kenaito:compile-maven3-jdk17`   | `runtime-jdk17` / Maven 3.9.9     | 编译环境（JDK 17 + Maven + git/gcc/make），`settings.xml` 走阿里云源 |
+| `image/compile-maven3-jdk21`   | `kenaito:compile-maven3-jdk21`   | `runtime-jdk21` / Maven 3.9.9     | 同上，JDK 换 21；编 Java 21 目标时用 |
+| `image/compile-maven3-jdk25`   | `kenaito:compile-maven3-jdk25`   | `runtime-jdk25` / Maven 3.9.9     | 同上，JDK 换 25；编 Java 25 目标时用 |
 | `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | 上者 / Tengine 3.1.0 源码编译     | 反向代理 / Web 服务器，自定义 `nginx.conf`                               |
 | `image/tools-ansible`          | `kenaito:ansible`                | 上者 / Ansible（基于 runtime-python315） | 运维工具镜像，锁定 ansible-core 2.16.3                     |
 

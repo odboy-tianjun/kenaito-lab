@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Maven 全局配置（镜像内 ${MAVEN_HOME}/conf/settings.xml）。
+  只改镜像源，其余保持 Maven 默认行为；本地仓库仍是 ~/.m2/repository，
+  构建时挂载 -v ~/.m2:/home/admin/.m2 即可复用宿主机缓存。
+  可选环境变量：
+    MAVEN_OPTS      JVM 参数，如 -Xmx2g
+    MAVEN_ARGS      Maven 4 的通用参数；Maven 3.9 起也支持（如 -B）
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
+
+  <!-- 阿里云镜像同时代理 central 与几个常用仓库；<mirrorOf>*</mirrorOf> 会连项目里自建的
+       private 仓库一起劫持，这里只代理 central，其余仓库仍按项目本身的配置访问 -->
+  <mirrors>
+    <mirror>
+      <id>aliyun-public</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Aliyun public</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+    </mirror>
+    <mirror>
+      <id>aliyun-spring</id>
+      <mirrorOf>spring-milestones,spring-snapshots</mirrorOf>
+      <name>Aliyun spring</name>
+      <url>https://maven.aliyun.com/repository/spring</url>
+    </mirror>
+  </mirrors>
+
+  <profiles>
+    <!-- 保留 Maven 内建的默认 profile 名，让 aliyun 镜像对 central 生效并优先于内置配置 -->
+    <profile>
+      <id>aliyun</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://maven.aliyun.com/repository/public</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>spring-milestones</id>
+          <url>https://maven.aliyun.com/repository/spring</url>
+        </repository>
+        <repository>
+          <id>spring-snapshots</id>
+          <url>https://maven.aliyun.com/repository/spring</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>https://maven.aliyun.com/repository/public</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>aliyun</activeProfile>
+  </activeProfiles>
+
+</settings>
