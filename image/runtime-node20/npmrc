@@ -1,0 +1,4 @@
+# 与 runtime-python310 的 ~/.pip/pip.conf 对应：全局 .npmrc，镜像内 npm 默认走阿里云源
+registry=https://registry.npmmirror.com
+# 下载原生模块 / electron 等二进制时也走阿里云
+disturl=https://npmmirror.com/mirrors/node
