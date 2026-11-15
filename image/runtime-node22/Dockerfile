@@ -1,4 +1,5 @@
-FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:system-alinux3
+# 基于 python 运行时：Node 原生模块（node-gyp）需要 python3，直接复用现成镜像，避免重复装
+FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:runtime-python315
 LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 ENV NODE_HOME=/usr/local/node
@@ -17,5 +18,6 @@ RUN set -e && yum install \
     node -v; \
     npm -v;
 
-# 全局 npm 源走阿里云（npmmirror），与 runtime-python310 的 pip.conf 对应
-COPY npmrc /root/.npmrc
+# 全局 npm 源走阿里云（npmmirror）：Node 发行包自带 npm 的全局配置目录就是
+# ${NODE_HOME}/etc/npmrc（npm prefix 为 NODE_HOME 时），放在这里对所有用户生效
+COPY npmrc ${NODE_HOME}/etc/npmrc
