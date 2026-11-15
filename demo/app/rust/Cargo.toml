@@ -1,0 +1,15 @@
+[package]
+name = "rust-demo"
+version = "1.0.0"
+edition = "2021"
+description = "Rust 简单 Web 示例，只用标准库 TcpListener，无第三方依赖"
+
+[dependencies]
+
+[profile.release]
+# 产物更小、启动更快；运行镜像里只需这一个静态二进制
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
