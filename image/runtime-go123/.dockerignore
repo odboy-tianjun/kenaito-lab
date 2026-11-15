@@ -1,0 +1,5 @@
+# 由 build.sh 预下载的 Go 压缩包经 ADD 解压进镜像，
+# ADD 的源文件必须在构建上下文内，因此 *.tar.gz 不能在这里忽略
+build.sh
+.git/
+.DS_Store
