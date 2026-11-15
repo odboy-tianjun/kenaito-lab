@@ -1,4 +1,4 @@
-FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:system-alinux4
+FROM registry.cn-shanghai.aliyuncs.com/odboy/kenaito:system-alinux3
 LABEL MAINTAINER="tianjun@odboy.cn"
 ENV TimeZone=Asia/Shanghai
 ENV TENGINE_VERSION=3.1.0
