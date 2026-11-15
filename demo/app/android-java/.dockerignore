@@ -1,0 +1,4 @@
+build.sh
+dist/
+.git/
+.DS_Store

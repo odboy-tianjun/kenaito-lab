@@ -1,0 +1,8 @@
+# 构建产物 / 本地缓存
+build/
+.gradle/
+local.properties
+*.apk
+*.aab
+dist/
+.DS_Store

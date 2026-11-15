@@ -61,6 +61,7 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 | `image/compile-node16`         | `kenaito:compile-node16`         | `runtime-node16` / 编译工具链     | 同上，Node 16 版本线                                                     |
 | `image/runtime-rust`           | `kenaito:runtime-rust`           | 上者 / Rust 1.100.0               | 运行环境，rustc/cargo（无文档、无 rust-src）                             |
 | `image/compile-rust`           | `kenaito:compile-rust`           | `runtime-rust` / 编译工具链       | 编译环境，追加 gcc/make/pkg-config/openssl-devel，crates 源走阿里云       |
+| `image/compile-android-gradle8x` | `kenaito:compile-android-gradle8x` | `runtime-jdk21` / SDK 35+36、build-tools 35.0.0、NDK 27、Gradle 8.14.3 | Android 编译环境，仅出 apk/aar（无运行阶段），Gradle 仓库源走阿里云；示例见 `demo/app/android-kotlin`、`demo/app/android-java` |
 
 ### 部署编排
 
@@ -113,6 +114,8 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 | [`demo/app/node-frontend-react-class`](demo/app/node-frontend-react-class/README.md) | `compile-node22` / `proxy-tengine3` | 8093 | React 19 类组件写法 |
 | [`demo/app/node-frontend-vite5`](demo/app/node-frontend-vite5/README.md) | `compile-node22` / `proxy-tengine3` | 8092 | Vite 5 + Vue 3 前端，用于和 Vite 7 对照 |
 | [`demo/app/rust`](demo/app/rust/README.md)         | `compile-rust` / `runtime-rust`    | 8088       | Rust 标准库 TcpListener Web 两阶段构建示例                  |
+| [`demo/app/android-kotlin`](demo/app/android-kotlin/README.md) | `compile-android-gradle8x` | - | Kotlin Android 应用编译示例，产出 debug apk 并拷回宿主机（apk 由真机安装，无运行阶段） |
+| [`demo/app/android-java`](demo/app/android-java/README.md)     | `compile-android-gradle8x` | - | 纯 Java Android 应用编译示例，产出 debug apk 并拷回宿主机 |
 | [`demo/plateform/tengine3`](demo/plateform/tengine3/README.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
 
 
@@ -135,3 +138,7 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 - rust 适用于 rust 应用
   - 编译：`compile-rust`（rustc/cargo + gcc/make，crates 源走阿里云）
   - 运行：`runtime-rust`（rustc/cargo，直接运行编译出的二进制）
+- android 适用于 android 应用（kotlin / java）
+  - 编译：`compile-android-gradle8x`（JDK 21 + Android SDK 35/36 + build-tools 35.0.0 + NDK 27 + Gradle 8.14.3，Gradle 仓库源走阿里云）
+  - 运行：不适用。产物是 apk / aar，由真机或模拟器安装，容器里没有常驻进程
+  - 取产物：`docker create` + `docker cp`，或直接把源码目录挂载进编译镜像跑 `gradle`，示例见 `demo/app/android-kotlin`、`demo/app/android-java`
