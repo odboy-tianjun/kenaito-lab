@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #303133;
+  background: #f5f7fa;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 56px;
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #409eff;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-item {
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: #303133;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: #409eff;
+}
+
+.nav-item.active {
+  color: #409eff;
+  border-color: #d9ecff;
+  background: #ecf5ff;
+}
+
+.main {
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.card + .card {
+  margin-top: 16px;
+}
+
+.card-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.kv {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.kv th,
+.kv td {
+  padding: 6px 12px;
+  border: 1px solid #ebeef5;
+  text-align: left;
+}
+
+.kv th {
+  width: 40%;
+  background: #fafafa;
+}
+
+.clock {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn {
+  padding: 6px 14px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.btn.primary {
+  color: #fff;
+  border-color: #409eff;
+  background: #409eff;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.field label {
+  width: 80px;
+  text-align: right;
+}
+
+.field input,
+.field select {
+  flex: 1;
+  max-width: 320px;
+  padding: 6px 10px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+}
+
+.hint {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: #f0f9eb;
+  color: #67c23a;
+}
+
+.error {
+  margin-left: 8px;
+  color: #f56c6c;
+  font-size: 12px;
+}
