@@ -1,0 +1,26 @@
+server:
+  port: ${APP_PORT:8084}
+  shutdown: graceful
+
+spring:
+  application:
+    name: springboot-jar17
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+app:
+  name: springboot-jar17
+
+# 健康检查只需要端口探测，actuator 只暴露 health
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    root: INFO

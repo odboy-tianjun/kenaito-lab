@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"
+docker-compose -f docker-compose.yml -p spring-war17-demo up -d

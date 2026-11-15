@@ -5,7 +5,7 @@
 ```
 image/  自建镜像：每个目录 = Dockerfile + build.sh，目录名即镜像 tag
 deploy/ 部署编排：三方镜像 + 自研的 docker-compose / 配置，每个目录 = docker-compose.yml + startup.sh / shutdown.sh + README.md(+demo.png)
-demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、tengine3）
+demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotnet6/8/9、python310-flask、springboot-jar17、spring-war17、tengine3）
 ```
 
 ### 使用约定
@@ -29,6 +29,7 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | `image/runtime-jdk17`          | `kenaito:runtime-jdk17`          | 上者 / JDK 17                     | 运行环境，仅 JDK                                                         |
 | `image/runtime-jdk21`          | `kenaito:runtime-jdk21`          | 上者 / JDK 21.0.2                 | 运行环境，仅 JDK                                                         |
 | `image/runtime-python310`      | `kenaito:runtime-python310`      | 上者 / Python 3.10.0              | 运行环境，Python + pip 源（`pip.conf`）                                  |
+| `image/runtime-tomcat10`       | `kenaito:runtime-tomcat10`       | `runtime-jdk17` / Tomcat 10.1.34  | 运行环境，JDK 17 + Tomcat（war 包部署用），兼容 Spring 6 |
 | `image/runtime-dotnet6`        | `kenaito:runtime-dotnet6`        | 上者 / ASP.NET Core 运行时 6.0.35 | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet8`        | `kenaito:runtime-dotnet8`        | 上者 / ASP.NET Core 运行时 8.0.x  | 运行环境，仅运行时                                                       |
 | `image/runtime-dotnet9`        | `kenaito:runtime-dotnet9`        | 上者 / ASP.NET Core 运行时 9.0.x  | 运行环境，仅运行时                                                       |
@@ -82,6 +83,8 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
 | [`demo/dotnet8`](demo/dotnet8/README.md)    | `compile-dotnet8` / `runtime-dotnet8` | 8081       | .NET 8 两阶段构建示例                                      |
 | [`demo/dotnet9`](demo/dotnet9/README.md)    | `compile-dotnet9` / `runtime-dotnet9` | 8082       | .NET 9 两阶段构建示例                                      |
 | [`demo/python310-flask`](demo/python310-flask/README.md) | `runtime-python310` | 8083 | Python 3.10 + Flask 3.0 单阶段构建示例            |
+| [`demo/springboot-jar17`](demo/springboot-jar17/README.md) | `compile-maven3-jdk17` / `runtime-jdk17` | 8084 | Spring Boot 3.4 可执行 jar 两阶段构建示例 |
+| [`demo/spring-war17`](demo/spring-war17/README.md)       | `compile-maven3-jdk17` / `tomcat:10.1-jdk17` | 8085 | Spring MVC 6 war 包 + 外置 Tomcat 10.1 两阶段构建示例 |
 | [`demo/tengine3`](demo/tengine3/README.md)     | `proxy-tengine3`                   | 80、443       | Tengine 3.1.0 反向代理示例，证书与站点配置挂载目录         |
 
 
@@ -90,6 +93,8 @@ demo/   构建示例：基于 image/ 下的镜像做构建与运行演示（dotn
   - 编译：`runtime-dotnet*` 之上的 `compile-dotnet*`
   - 运行：`runtime-dotnet*`
 - java 适用于 java 应用
-  - 编译与运行：`runtime-jdk*`（含 JDK，可直接编译后运行）
+  - 编译：`compile-maven3-jdk17` / `-jdk21` / `-jdk25`（JDK + Maven，按目标字节码版本选）
+  - 运行：`runtime-jdk*`（仅 JDK，直接 `java -jar` 或作为外置 Tomcat 的基础镜像）
+  - war 包运行：`runtime-tomcat10`（JDK 17 + Tomcat 10.1，兼容 Spring 6 / Servlet 6）
 - python 适用于 python 应用
   - 编译与运行：`runtime-python310`（已配置 pip 镜像源）
