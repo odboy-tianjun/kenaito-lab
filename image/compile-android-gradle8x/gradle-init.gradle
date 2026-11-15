@@ -1,0 +1,32 @@
+// Gradle 全局 init 脚本（镜像内 ${GRADLE_USER_HOME}/init.d/init.gradle），对容器里所有 Gradle 构建生效。
+// 只替换仓库地址，其余保持 Gradle 默认行为；项目里的 repositoryMode / 私有仓库配置仍按各自 build.gradle 解析。
+// 阿里云代理的三类仓库：Google（androidx / build-tools 依赖）、Maven Central、Gradle Plugin Portal
+
+def mirrors = [
+    'https://dl.google.com/dl/android/maven2': 'https://maven.aliyun.com/repository/google',
+    'https://repo.maven.apache.org/maven2'   : 'https://maven.aliyun.com/repository/public',
+    'https://repo1.maven.org/maven2'         : 'https://maven.aliyun.com/repository/public',
+    'https://plugins.gradle.org/m2'          : 'https://maven.aliyun.com/repository/gradle-plugin',
+]
+
+def redirect = { RepositoryHandler repos ->
+    repos.configureEach { repo ->
+        if (repo instanceof MavenArtifactRepository) {
+            def url = repo.url.toString()
+            def target = mirrors.find { from, to -> url.startsWith(from) }
+            if (target) {
+                repo.url = target.value
+            }
+        }
+    }
+}
+
+allprojects {
+    buildscript {
+        redirect(repositories)
+    }
+    redirect(repositories)
+}
+settingsEvaluated { settings ->
+    redirect(settings.pluginManagement.repositories)
+}

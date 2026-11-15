@@ -1,0 +1,5 @@
+# build.sh 预下载的 zip（cmdline-tools / gradle / SDK 组件包）由 Dockerfile COPY 进镜像，
+# 必须在构建上下文内，因此不能在这里忽略 *.zip
+build.sh
+.git/
+.DS_Store

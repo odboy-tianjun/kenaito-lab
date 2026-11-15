@@ -1,0 +1,6 @@
+# 构建产物 / 本地缓存
+*.zip
+*.sha256
+*.part
+*.pro
+.DS_Store
