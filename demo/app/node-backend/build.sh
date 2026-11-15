@@ -3,7 +3,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-IMAGE=${IMAGE:-registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-node}
+IMAGE=${IMAGE:-registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-node-backend}
 docker build -t "${IMAGE}" .
 
 if [ "${PUSH:-0}" = "1" ]; then

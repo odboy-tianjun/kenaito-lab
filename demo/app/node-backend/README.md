@@ -1,4 +1,4 @@
-# node 示例
+# node-backend 示例
 
 演示如何用 `compile-node22` + `runtime-node22` 两阶段构建一个 Node.js 22 Web 服务。只用 Node 内置 `http` 模块，
 无第三方依赖（`npm install` 不会真的下载东西），但依赖层写法按真实项目留好了。
@@ -11,10 +11,10 @@
 ### 示例内容
 
 ```
-node/
+node-backend/
 ├── package.json        # 无依赖；engines.node >= 20
 ├── server.js           # 内置 http：/、/api/info、/health、/api/hello、/page，带 SIGTERM 优雅关闭
-├── Dockerfile          # 两阶段：compile-node22 -> runtime-node22，产物在 /out
+├── Dockerfile          # 两阶段：compile-node22 -> runtime-node22
 ├── build.sh            # 构建镜像（PUSH=1 时同时推送）
 ├── docker-compose.yml  # 部署编排（端口 8087，固定 IP 172.31.1.20）
 ├── startup.sh          # docker-compose up -d
@@ -24,9 +24,9 @@ node/
 ### 构建与部署
 
 ```shell
-sh build.sh            # docker build -t registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-node .
+sh build.sh            # docker build -t registry.cn-shanghai.aliyuncs.com/odboy/kenaito:demo-node-backend .
 PUSH=1 sh build.sh     # 构建并推送
-sh startup.sh          # docker-compose -f docker-compose.yml -p node-demo up -d
+sh startup.sh          # docker-compose -f docker-compose.yml -p node-backend-demo up -d
 ```
 
 访问：
