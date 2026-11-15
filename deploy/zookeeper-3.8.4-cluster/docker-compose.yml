@@ -10,7 +10,7 @@ networks:
 
 services:
   zookeeper1:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/zookeeper:3.8.4      # 原镜像`zookeeper:3.8.4`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:zookeeper-3.8.4      # 原镜像`zookeeper:3.8.4`
     container_name: zookeeper1
     restart: unless-stopped
     volumes:
@@ -25,7 +25,7 @@ services:
       zookeeper:
         ipv4_address: 172.23.0.81
   zookeeper2:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/zookeeper:3.8.4      # 原镜像`zookeeper:3.8.4`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:zookeeper-3.8.4      # 原镜像`zookeeper:3.8.4`
     container_name: zookeeper2
     restart: unless-stopped
     volumes:
@@ -40,7 +40,7 @@ services:
       zookeeper:
         ipv4_address: 172.23.0.82
   zookeeper3:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/zookeeper:3.8.4      # 原镜像`zookeeper:3.8.4`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:zookeeper-3.8.4      # 原镜像`zookeeper:3.8.4`
     container_name: zookeeper3
     restart: unless-stopped
     volumes:

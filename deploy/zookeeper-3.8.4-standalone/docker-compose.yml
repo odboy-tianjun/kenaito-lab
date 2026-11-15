@@ -10,7 +10,7 @@ networks:
 
 services:
   zookeeper:
-    image: registry.cn-shanghai.aliyuncs.com/odboy/zookeeper:3.8.4      # 原镜像`zookeeper:3.8.4`
+    image: registry.cn-shanghai.aliyuncs.com/odboy/thirdrepo:zookeeper-3.8.4      # 原镜像`zookeeper:3.8.4`
     container_name: zookeeper         # 容器名
     restart: unless-stopped
     volumes:
