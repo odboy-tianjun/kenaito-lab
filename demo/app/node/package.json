@@ -1,0 +1,10 @@
+{
+  "name": "node-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Node.js 简单 Web 示例，只用 Node 内置 http 模块，无第三方依赖",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  }
+}
