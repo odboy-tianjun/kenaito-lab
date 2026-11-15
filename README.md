@@ -13,8 +13,6 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 ### 使用约定
 
 - 所有自建镜像都基于 `kenaito:system-alinux3` 构建，先构建基础镜像，再构建上层镜像
-  - 例外：`proxy-tengine3` 的 `FROM` 写的是 `kenaito:system-alinux4`（2026-01-17 调整后未同步回 alinux3），
-    仓库内没有 `image/system-alinux4` 目录，重新构建前需先确认该基础镜像是否已推送
 - 镜像目录：`cd image/<目录> && sh build.sh`（构建并推送，镜像 tag 写在 `build.sh` 的 `IMAGE` 变量，与目录名一致）
 - 部署目录：`cd deploy/<目录> && sh startup.sh`，`sh shutdown.sh` 停止；每个目录自洽，不依赖仓库其它层级
 - 部署目录中使用的第三方镜像（MySQL、Nacos、Zookeeper、RocketMQ、EFK、SkyWalking 等）均同步到了
@@ -45,7 +43,7 @@ demo/plateform/    平台类示例（tengine3 反向代理）
 | `image/compile-maven3-jdk17`   | `kenaito:compile-maven3-jdk17`   | `runtime-jdk17` / Maven 3.9.9     | 编译环境（JDK 17 + Maven + git/gcc/make），`settings.xml` 走阿里云源 |
 | `image/compile-maven3-jdk21`   | `kenaito:compile-maven3-jdk21`   | `runtime-jdk21` / Maven 3.9.9     | 同上，JDK 换 21；编 Java 21 目标时用 |
 | `image/compile-maven3-jdk25`   | `kenaito:compile-maven3-jdk25`   | `runtime-jdk25` / Maven 3.9.9     | 同上，JDK 换 25；编 Java 25 目标时用 |
-| `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | `system-alinux4` / Tengine 3.1.0 源码编译 | 反向代理 / Web 服务器，自定义 `nginx.conf`；基础镜像写的是 `system-alinux4`（仓库内未收录该目录） |
+| `image/proxy-tengine3`         | `kenaito:proxy-tengine3`         | `system-alinux3` / Tengine 3.1.0 源码编译 | 反向代理 / Web 服务器，自定义 `nginx.conf`                               |
 | `image/tools-ansible`          | `kenaito:ansible`                | `runtime-python315` / Ansible     | 运维工具镜像，锁定 ansible-core 2.16.3                     |
 | `image/runtime-go123`          | `kenaito:runtime-go123`          | 上者 / Go 1.23.12                 | 运行环境，Go + git/gcc（cgo）                                            |
 | `image/runtime-go122`          | `kenaito:runtime-go122`          | 上者 / Go 1.22.12                 | 同上，Go 1.22 版本线                                                     |
